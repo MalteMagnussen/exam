@@ -3,7 +3,6 @@ import facade from "./apiFacade";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { LogIn, LoggedIn } from "./components/Login.jsx";
 import WelcomePage from "./components/Welcome.jsx";
-import Search from "./components/Search.jsx";
 import Admin from "./components/Admin.jsx";
 import {
   HashRouter as Router,
@@ -44,9 +43,6 @@ const App = () => {
                 />
               )}
             />
-            <Route path="/search">
-              <Search permission={loggedIn} />
-            </Route>
             <Route path="/admin">
               <Admin loggedIn={loggedIn} roles={roles} />
             </Route>
@@ -99,11 +95,6 @@ const Header = ({ loggedIn, setLoggedIn, roles, setRoles }) => {
       <li>
         <NavLink to="/Jokes">Jokes</NavLink>
       </li>
-      {loggedIn && (
-        <li>
-          <NavLink to="/search">Search</NavLink>
-        </li>
-      )}
       {loggedIn && roles.includes("admin") && (
         <li>
           <NavLink to="/admin">Admin panel</NavLink>

@@ -2,5 +2,5 @@
 //Whenever you need an URL to access an endpoint, add it in here
 //and import this file whereever you need the URL
 
-export const localURL = "http://localhost:8080/testexamMomondo";
-export const onlineURL = "https://maltemagnussen.com/testexamMomondo";
+export const localURL = "http://localhost:8080/exam";
+export const onlineURL = "https://maltemagnussen.com/exam";
