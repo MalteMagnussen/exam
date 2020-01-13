@@ -8,7 +8,11 @@ function handleHttpErrors(res) {
 }
 
 const ApiFacade = () => {
-  //Insert utility-methods from a latter step (d) here
+  /**
+   * method = PUT / POST / GET / DELETE
+   * addToken = TRUE / FALSE (logged in or not)
+   * body = Body of the fetch
+   */
   function makeOptions(method, addToken, body) {
     var opts = {
       method: method,
@@ -39,13 +43,44 @@ const ApiFacade = () => {
     return loggedIn;
   }
 
-  // const fetchSwapi = () => {
+  /*
+    FETCH EXAMPLES START
+  */
+  //OBSERVE This returns a promise, NOT the actual data, you must handle asynchronicity by the client
+  function getPersons() {
+    return fetch(URL).then(handleHttpErrors);
+  }
+
+  function addEditPerson(person) {
+    //Complete me. A smart version will handle both Add and Edit, but focus on Add (POST) only first
+
+    if (person.id === "") {
+      // ADD
+      let options = makeOptions("POST", person);
+      fetch(URL, options);
+      console.log("POST");
+    } else {
+      // EDIT
+      const uri = URL + "/" + person.id;
+      const options = makeOptions("PUT", person);
+      fetch(uri, options);
+      console.log("PUT");
+    }
+  }
+
+  function deletePerson(id) {
+    const uri = URL + "/" + id;
+    const options = makeOptions("DELETE");
+    fetch(uri, options);
+    console.log("DELETE");
+    //Complete me
+  }
+  /*
+    FETCH EXAMPLES END
+  */
+
   //   //Remember to always include options from the makeOptions fucntion with >true< as the second parameter
   //   //if you want to access a protected endpoint
-  //   const options = makeOptions("GET", true); //True add's the token
-  //   return fetch(URL + "/api/info/five", options).then(handleHttpErrors);
-  // };
-
   const fetchGetData = (endpoint, value) => {
     const options = makeOptions("GET", true); //True add's the token
     return fetch(URL + `/api/${endpoint}/${value}`, options).then(
