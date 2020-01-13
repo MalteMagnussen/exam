@@ -1,0 +1,16 @@
+What you must hand-in is a document with the following information
+
+Your full name and student-number
+	- Malte Hviid-Magnussen, cph-mh748
+
+A link to your GitHub repo(s)
+	- https://github.com/MalteMagnussen/exam
+
+A link to your Travis Logfile
+	- https://travis-ci.org/MalteMagnussen/exam/builds
+
+A link to your Deployed Client Application
+	- https://ses.maltemagnussen.com/exam/#/
+
+A link to your Deployed backend server
+	- https://maltemagnussen.com/exam/
