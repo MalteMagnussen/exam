@@ -67,7 +67,7 @@ public class UserFacade {
             em.persist(admin);
             em.persist(both);
             em.getTransaction().commit();
-
+            
         } finally {
             em.close();
         }
