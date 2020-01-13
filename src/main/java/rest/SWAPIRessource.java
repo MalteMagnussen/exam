@@ -27,13 +27,14 @@ public class SWAPIRessource {
     @Context
     SecurityContext securityContext;
 
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("populate")
-    public String populate() {
-        FACADE.populate();
-        return "{\"message\":\"Database populated.\"}";
-    }
+    // Disabled for now. Have populated the database. 
+//    @GET
+//    @Produces(MediaType.APPLICATION_JSON)
+//    @Path("populate")
+//    public String populate() {
+//        FACADE.populate();
+//        return "{\"message\":\"Database populated.\"}";
+//    }
     
     
     @GET
