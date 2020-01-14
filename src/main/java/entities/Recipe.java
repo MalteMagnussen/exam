@@ -29,6 +29,7 @@ public class Recipe implements Serializable {
 
     private int preparation_time; // in seconds
     private String directions; // instructions for the recipe..??
+    private String name;
     @OneToMany(mappedBy = "recipe")
     private List<Ingredient> ingredient_list;
     @ManyToMany(mappedBy = "recipe_list")
@@ -37,6 +38,24 @@ public class Recipe implements Serializable {
     public Recipe() {
         this.week_menu_plan = new ArrayList();
         this.ingredient_list = new ArrayList();
+    }
+
+    /**
+     * Get the value of name
+     *
+     * @return the value of name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Set the value of name
+     *
+     * @param name new value of name
+     */
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
