@@ -5,6 +5,7 @@
  */
 package entities;
 
+import dto.WeekDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +40,16 @@ public class Week_menu_plan implements Serializable {
 
     public Week_menu_plan() {
         this.recipe_list = new ArrayList();
+    }
+
+    public Week_menu_plan(WeekDTO weekDTO) {
+        this.recipe_list = new ArrayList();
+        weekDTO.getRecipe_list().forEach((recipe) -> {
+            recipe_list.add(new Recipe(recipe));
+        });
+        this.week_num = weekDTO.getWeek_num();
+        this.id = weekDTO.getId();
+        this.year_ = weekDTO.getYear_();
     }
 
     public int getId() {

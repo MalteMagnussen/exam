@@ -21,6 +21,7 @@ public class RecipeDTO {
     private String name;
     private List<IngredientDTO> ingredient_listDTO;
     private int price;
+    private List<WeekDTO> week;
 //    private List<Week_menu_planDTO> week_menu_plan;
 
     public RecipeDTO() {
@@ -34,6 +35,9 @@ public class RecipeDTO {
         recipe.getIngredient_list().forEach((ingredient) -> {
             this.ingredient_listDTO.add(new IngredientDTO(ingredient));
         });
+//        recipe.getWeek_menu_plan().forEach((week) -> {
+//            this.week.add(new WeekDTO(week));
+//        });
     }
 
     public int getPrice() {

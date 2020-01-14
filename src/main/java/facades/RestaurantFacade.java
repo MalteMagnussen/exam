@@ -8,10 +8,12 @@ package facades;
 import dto.ItemDTO;
 import dto.RecipeDTO;
 import dto.StorageDTO;
+import dto.WeekDTO;
 import entities.Ingredient;
 import entities.Item;
 import entities.Recipe;
 import entities.Storage;
+import entities.Week_menu_plan;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -247,7 +249,34 @@ public class RestaurantFacade {
             em.close();
         }
     }
-    
-   
+
+    public WeekDTO addWeek(WeekDTO weekDTO) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Week_menu_plan week = new Week_menu_plan(weekDTO);
+            em.persist(week);
+            em.getTransaction().commit();
+            return new WeekDTO(week);
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<WeekDTO> getWeeks() {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            List<Week_menu_plan> weeks = em.createNamedQuery("Week_menu_plan.getAll").getResultList();
+            em.getTransaction().commit();
+            List<WeekDTO> weekDTO = new ArrayList();
+            weeks.forEach(week -> {
+                weekDTO.add(new WeekDTO(week));
+            });
+            return weekDTO;
+        } finally {
+            em.close();
+        }
+    }
 
 }

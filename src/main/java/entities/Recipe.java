@@ -5,6 +5,7 @@
  */
 package entities;
 
+import dto.RecipeDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,15 @@ public class Recipe implements Serializable {
         this.directions = directions;
         this.name = name; 
         this.preparation_time = preparation_time;
+    }
+
+    public Recipe(RecipeDTO recipe) {
+        this.week_menu_plan = new ArrayList();
+        this.ingredient_list = new ArrayList();
+        this.directions = recipe.getDirections();
+        this.name = recipe.getName();
+        this.preparation_time = recipe.getPreparation_time();
+        
     }
     
     public void add(Ingredient ingredient) {
