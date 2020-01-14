@@ -6,14 +6,13 @@ const defaultErrorMessage = "Fill out all fields before submitting.";
 
 const Recipes = ({ loggedIn, roles }) => {
   return (
-    // <>
-    //   {!loggedIn || !roles.includes("admin") ? (
-    //     <p>You are not logged in as admin</p>
-    //   ) : (
-    //     <RecipesPage />
-    //   )}
-    // </>
-    <RecipesPage />
+    <>
+      {!loggedIn || !roles.includes("admin") ? (
+        <p>You are not logged in as admin</p>
+      ) : (
+        <RecipesPage />
+      )}
+    </>
   );
 };
 
