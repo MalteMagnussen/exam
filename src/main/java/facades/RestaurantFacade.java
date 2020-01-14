@@ -89,4 +89,20 @@ public class RestaurantFacade {
         }
     }
 
+    public List<StorageDTO> getStorage() {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            List<Storage> storages = em.createNamedQuery("Storage.getAll").getResultList();
+            em.getTransaction().commit();
+            List<StorageDTO> storagesDTO = new ArrayList();
+            storages.forEach((storage) -> {
+                storagesDTO.add(new StorageDTO(storage));
+            });
+            return storagesDTO;
+        } finally {
+            em.close();
+        }
+    }
+
 }

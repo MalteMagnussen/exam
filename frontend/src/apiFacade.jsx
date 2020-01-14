@@ -83,11 +83,9 @@ const ApiFacade = () => {
    * @param {*} endpoint
    * @param {*} value
    */
-  const fetchGetData = (endpoint, value) => {
+  const fetchGetData = endpoint => {
     const options = makeOptions("GET", true); //True add's the token
-    return fetch(URL + `/api/${endpoint}/${value}`, options).then(
-      handleHttpErrors
-    );
+    return fetch(URL + `/api/${endpoint}`, options).then(handleHttpErrors);
   };
 
   const getRole = () => {

@@ -63,9 +63,17 @@ public class RestaurantResource {
     @GET
     @Path("items")
     @Produces({MediaType.APPLICATION_JSON})
-    @RolesAllowed({"admin", "user"})
+    @RolesAllowed({"admin"})
     public List<ItemDTO> getItems() {
         return FACADE.getItems();
+    }
+    
+    @GET
+    @Path("storage")
+    @Produces({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin"})
+    public List<StorageDTO> getStorage() {
+        return FACADE.getStorage();
     }
 
 //    @GET
