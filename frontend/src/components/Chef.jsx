@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import facade from "../apiFacade.jsx";
-import { Table, Row, Col, DropdownButton, Dropdown } from "react-bootstrap";
+import { Table, Row, Col } from "react-bootstrap";
 
 /**
  * DONE HERE:
@@ -14,7 +14,6 @@ const Chef = ({ loggedIn }) => {
 
 const ChefPage = () => {
   const [recipes, setRecipes] = useState();
-  const [itemButton, setItemButton] = useState(false);
   const [menu, setMenu] = useState([]);
   const [msg, setMsg] = useState("");
 
@@ -31,7 +30,7 @@ const ChefPage = () => {
           console.log("Network error");
         }
       });
-  }, [itemButton]);
+  }, []);
 
   const handleMenu = item => {
     if (menu.length >= 7) {

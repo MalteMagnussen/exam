@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import facade from "../apiFacade.jsx";
-import { Table, Row, Col, DropdownButton, Dropdown } from "react-bootstrap";
-
-const defaultErrorMessage = "Fill out all fields before submitting.";
+import { Table, Row, Col } from "react-bootstrap";
 
 const Recipes = ({ loggedIn, roles }) => {
   return (

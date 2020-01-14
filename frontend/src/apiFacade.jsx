@@ -44,7 +44,7 @@ const ApiFacade = () => {
   }
 
   function addEditObj(ekstraURL, obj) {
-    if (obj.id == 0) {
+    if (obj.id === 0) {
       // ADD
       const uri = URL + `/api/${ekstraURL}`;
       let options = makeOptions("POST", true, obj);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import facade from "../apiFacade.jsx";
-import { Table, Row, Col, DropdownButton, Dropdown } from "react-bootstrap";
+import { DropdownButton, Dropdown } from "react-bootstrap";
 
 const IngredientsPage = ({ loggedIn, roles }) => {
   return (
@@ -18,7 +18,6 @@ const Ingredients = () => {
   const [recipes, setRecipes] = useState();
   const [items, setItems] = useState();
   const [itemButton, setItemButton] = useState(false);
-  const [msg, setMsg] = useState("");
   const emptyRecipe = {
     directions: "",
     id: 0,
@@ -77,7 +76,7 @@ const Ingredients = () => {
         <>
           <DropdownButton id="recipes" title="Choose Recipe">
             {recipes.map(recipe => (
-              <Dropdown.Item onClick={() => setRecipe(recipe)}>
+              <Dropdown.Item key={recipe.id} onClick={() => setRecipe(recipe)}>
                 {recipe.name}
               </Dropdown.Item>
             ))}
@@ -86,7 +85,7 @@ const Ingredients = () => {
           <br />
           <DropdownButton id="items" title="Choose Items">
             {items.map(item => (
-              <Dropdown.Item onClick={() => setItem(item)}>
+              <Dropdown.Item key={item.id} onClick={() => setItem(item)}>
                 {item.name}
               </Dropdown.Item>
             ))}

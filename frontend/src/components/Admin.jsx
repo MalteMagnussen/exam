@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import facade from "../apiFacade.jsx";
-import { Table, Row, Col, DropdownButton, Dropdown } from "react-bootstrap";
+import { Table, Row, Col } from "react-bootstrap";
 
 const defaultErrorMessage = "Fill out all fields before submitting.";
 
@@ -34,7 +34,7 @@ const CreateItem = () => {
   const [storageList, setStorageList] = useState();
 
   const handleChange = event => {
-    if (item.name === "" || item.price_pr_kg == 0) {
+    if (item.name === "" || item.price_pr_kg === 0) {
       setErrorMessage(defaultErrorMessage);
     } else {
       setErrorMessage("");
@@ -47,7 +47,7 @@ const CreateItem = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    if (item.name === "" || item.price_pr_kg == 0) {
+    if (item.name === "" || item.price_pr_kg === 0) {
       setErrorMessage(defaultErrorMessage);
       return;
     }

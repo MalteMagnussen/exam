@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import facade from "./apiFacade";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { LogIn, LoggedIn } from "./components/Login.jsx";
@@ -10,13 +10,9 @@ import {
   Switch,
   Route,
   NavLink,
-  useParams,
-  useRouteMatch,
-  Link,
-  Prompt
+  Link
 } from "react-router-dom";
 import ShowRoles from "./components/ShowRoles.jsx";
-import Jokes from "./components/getJokes.jsx";
 import Recipes from "./components/Recipes.jsx";
 import IngredientsPage from "./components/Ingredients.jsx";
 
@@ -51,9 +47,6 @@ const App = () => {
             </Route>
             <Route path="/adminrecipes">
               <Recipes loggedIn={loggedIn} roles={roles} />
-            </Route>
-            <Route path="/Jokes">
-              <Jokes loggedIn={loggedIn} />
             </Route>
             <Route path="/chef">
               <Chef loggedIn={loggedIn} />
@@ -104,9 +97,7 @@ const Header = ({ loggedIn, setLoggedIn, roles, setRoles }) => {
         </li>
       )}
       {/*Login / logout end*/}
-      <li>
-        <NavLink to="/Jokes">Jokes</NavLink>
-      </li>
+
       {loggedIn && (
         <li>
           <NavLink to="/chef">Chef panel</NavLink>
