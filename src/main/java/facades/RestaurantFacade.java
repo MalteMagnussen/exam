@@ -237,7 +237,10 @@ public class RestaurantFacade {
             List<Recipe> recipes = em.createNamedQuery("Recipe.getAll").getResultList();
             List<RecipeDTO> recipesDTO = new ArrayList();
             recipes.forEach((recipe) -> {
-                recipesDTO.add(new RecipeDTO(recipe));
+                RecipeDTO recipeDTO = new RecipeDTO(recipe);
+//                int price = em.createNamedQuery("Recipe.price", Integer.class).setParameter("id", recipe.getId()).getSingleResult();
+//                recipeDTO.setPrice(price);
+                recipesDTO.add(recipeDTO);
             });
             return recipesDTO;
         } finally {

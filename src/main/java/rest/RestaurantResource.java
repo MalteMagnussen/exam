@@ -86,7 +86,7 @@ public class RestaurantResource {
     @GET
     @Path("recipe")
     @Produces({MediaType.APPLICATION_JSON})
-    @RolesAllowed({"admin", "user"})
+//    @RolesAllowed({"admin", "user"})
     public List<RecipeDTO> getAllRecipes() {
         return FACADE.getRecipes();
     }

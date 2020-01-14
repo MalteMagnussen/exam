@@ -20,6 +20,7 @@ public class RecipeDTO {
     private String directions; // instructions for the recipe..??
     private String name;
     private List<IngredientDTO> ingredient_listDTO;
+    private int price;
 //    private List<Week_menu_planDTO> week_menu_plan;
 
     public RecipeDTO() {
@@ -33,6 +34,14 @@ public class RecipeDTO {
         recipe.getIngredient_list().forEach((ingredient) -> {
             this.ingredient_listDTO.add(new IngredientDTO(ingredient));
         });
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 
     public int getId() {
