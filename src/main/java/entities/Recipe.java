@@ -5,6 +5,7 @@
  */
 package entities;
 
+import dto.IngredientDTO;
 import dto.RecipeDTO;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -62,9 +63,10 @@ public class Recipe implements Serializable {
         this.directions = recipe.getDirections();
         this.name = recipe.getName();
         this.preparation_time = recipe.getPreparation_time();
-        recipe.getIngredient_listDTO().forEach((ingredient) -> {
+
+        for (IngredientDTO ingredient : recipe.getIngredient_listDTO()) {
             this.ingredient_list.add(new Ingredient(ingredient));
-        });
+        }
 
     }
 

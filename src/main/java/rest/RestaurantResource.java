@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import dto.ItemDTO;
 import dto.RecipeDTO;
 import dto.StorageDTO;
+import dto.WeekDTO;
 import utils.EMF_Creator;
 import facades.RestaurantFacade;
 import java.util.List;
@@ -86,10 +87,28 @@ public class RestaurantResource {
     @GET
     @Path("recipe")
     @Produces({MediaType.APPLICATION_JSON})
-//    @RolesAllowed({"admin", "user"})
+    @RolesAllowed({"admin", "user"})
     public List<RecipeDTO> getAllRecipes() {
         return FACADE.getRecipes();
     }
+    
+    @POST
+    @Path("week/add")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin", "user"})
+    public WeekDTO addWeek(WeekDTO menu) {
+        return FACADE.addWeek(menu);
+    }
+    
+    @GET
+    @Path("week")
+    @Produces({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin", "user"})
+    public List<WeekDTO> getWeek() {
+        return FACADE.getWeeks();
+    }
+    
 
 //    @GET
 //    @Path("id/{id}")
