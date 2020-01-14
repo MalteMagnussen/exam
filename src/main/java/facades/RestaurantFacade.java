@@ -219,7 +219,7 @@ public class RestaurantFacade {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            Storage storage = em.find(Storage.class,itemID);
+            Storage storage = em.find(Storage.class, itemID);
             storage.setAmount(amount);
             em.merge(storage);
             em.getTransaction().commit();
@@ -244,7 +244,7 @@ public class RestaurantFacade {
             recipes.forEach((recipe) -> {
                 List<Ingredient> ingredients = em.createNamedQuery("Ingredient.getForRecipe").setParameter("id", recipe.getId()).getResultList();
                 List<IngredientDTO> ingredientsDTO = new ArrayList();
-                ingredients.forEach((ingredient)->{
+                ingredients.forEach((ingredient) -> {
                     Item item = em.createNamedQuery("Ingredient.getItemForRecipe", Item.class).setParameter("id", ingredient.getId()).getSingleResult();
                     ingredient.setItem(item);
                     IngredientDTO ingredientDTO = new IngredientDTO(ingredient);
@@ -302,12 +302,54 @@ public class RestaurantFacade {
                 Integer ingredient_amount = em.createNamedQuery("Ingredient.checkStorage", Integer.class).setParameter("name", name).getSingleResult();
                 Integer storage_amount = em.createNamedQuery("Storage.checkStorage", Integer.class).setParameter("name", name).getSingleResult();
                 if (ingredient_amount > storage_amount) {
-                    throw new WebApplicationException("Ingredient with name: "+ name +" is not in storage at a high enough quantity.", Response.Status.BAD_REQUEST);
+                    throw new WebApplicationException("Ingredient with name: " + name + " is not in storage at a high enough quantity.", Response.Status.BAD_REQUEST);
                 }
             }
 
             em.getTransaction().commit();
             return "You have all the required ingredients for that recipe in storage.";
+        } finally {
+            em.close();
+        }
+    }
+
+    public RecipeDTO addRecipe(RecipeDTO recipeDTO) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Recipe recipe = new Recipe(recipeDTO);
+            em.persist(recipe);
+            em.getTransaction().commit();
+            return new RecipeDTO(recipe);
+        } finally {
+            em.close();
+        }
+    }
+
+    public RecipeDTO editRecipe(RecipeDTO recipeDTO) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Recipe recipe = em.find(Recipe.class, recipeDTO.getId());
+            recipe.setDirections(recipeDTO.getDirections());
+            recipe.setName(recipeDTO.getName());
+            recipe.setPreparation_time(recipeDTO.getPreparation_time());
+            em.merge(recipe);
+            em.getTransaction().commit();
+            return new RecipeDTO(recipe);
+        } finally {
+            em.close();
+        }
+    }
+
+    public RecipeDTO deleteRecipe(int id) {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Recipe recipe = em.find(Recipe.class, id);
+            em.remove(recipe);
+            em.getTransaction().commit();
+            return new RecipeDTO(recipe);
         } finally {
             em.close();
         }

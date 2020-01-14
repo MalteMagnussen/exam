@@ -119,7 +119,52 @@ public class RestaurantResource {
         return "{\"message\":\""+FACADE.checkStorageHelper(ingredients)+"\"}";
     }
     
+    // RECIPE CRUD
+    @POST
+    @Path("recipe")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin"})
+    public RecipeDTO makeRecipe(RecipeDTO recipe) {
+        return FACADE.addRecipe(recipe);
+    }
 
+    @PUT
+    @Path("recipe")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin"})
+    public RecipeDTO editRecipe(RecipeDTO recipe) {
+        return FACADE.editRecipe(recipe);
+    }
+    
+    @DELETE
+    @Path("recipe/{id}")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin"})
+    public RecipeDTO deleteRecipe(@PathParam("id") int id) {
+        return FACADE.deleteRecipe(id);
+    }
+
+//    @POST
+//    @Path("ingredient/{itemId}/{amount}/{recipeId}") //ID OF ITEM
+//    @Consumes({MediaType.APPLICATION_JSON})
+//    @Produces({MediaType.APPLICATION_JSON})
+//    @RolesAllowed({"admin"})
+//    public IngredientDTO makeIngredient(@PathParam("itemId") int itemId,@PathParam("amount") int amount,@PathParam("recipeId") int recipeId  ) {
+//        // id of the item.
+//        // find item. 
+//        // make ingredient with volume. new ingredient ( volume, item ) 
+//        // find recipe with id
+//        // set recipe on ingredient
+//        // then persist ingredient
+//    }
+    
+    
+    
+    
+    
 //    @GET
 //    @Path("id/{id}")
 //    @Produces({MediaType.APPLICATION_JSON})

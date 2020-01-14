@@ -39,7 +39,7 @@ public class Recipe implements Serializable {
     private int preparation_time; // in seconds
     private String directions; // instructions for the recipe..??
     private String name;
-    @OneToMany(mappedBy = "recipe", cascade = CascadeType.PERSIST)
+    @OneToMany(mappedBy = "recipe")
     private List<Ingredient> ingredient_list;
     @ManyToMany(mappedBy = "recipe_list")
     private List<Week_menu_plan> week_menu_plan;

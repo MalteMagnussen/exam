@@ -6,13 +6,14 @@ const defaultErrorMessage = "Fill out all fields before submitting.";
 
 const Recipes = ({ loggedIn, roles }) => {
   return (
-    <>
-      {!loggedIn || !roles.includes("admin") ? (
-        <p>You are not logged in as admin</p>
-      ) : (
-        <RecipesPage />
-      )}
-    </>
+    // <>
+    //   {!loggedIn || !roles.includes("admin") ? (
+    //     <p>You are not logged in as admin</p>
+    //   ) : (
+    //     <RecipesPage />
+    //   )}
+    // </>
+    <RecipesPage />
   );
 };
 
@@ -23,18 +24,7 @@ const RecipesPage = () => {
   const emptyRecipe = {
     directions: "",
     id: 0,
-    ingredient_listDTO: [
-      {
-        amount: 0,
-        id: 0,
-        itemDTO: { id: 0, name: "", price_pr_kg: "" }
-      },
-      {
-        amount: 0,
-        id: 0,
-        itemDTO: { id: 0, name: "", price_pr_kg: "" }
-      }
-    ],
+    ingredient_listDTO: [],
     name: "",
     preparation_time: 0
   };
@@ -96,9 +86,135 @@ const RecipesPage = () => {
           <br />
           {JSON.stringify(recipe)}
         </Col>
-        <Col>Form for editing goes here.</Col>
+        <Col>
+          <AddEditRecipe
+            newRecipe={recipe}
+            emptyRecipe={emptyRecipe}
+            setMsg={setMsg}
+          />
+        </Col>
       </Row>
     </>
+  );
+};
+
+const AddEditRecipe = ({ newRecipe, emptyRecipe, setMsg }) => {
+  const [recipe, setRecipe] = useState({ ...newRecipe });
+
+  const handleChange = event => {
+    const target = event.target;
+    const id = target.id;
+    const value = target.value;
+    setRecipe({ ...recipe, [id]: value });
+  };
+
+  const handleSubmit = event => {
+    if (
+      recipe.name === "" ||
+      recipe.directions === "" ||
+      recipe.preparation_time === 0
+    ) {
+      setMsg("You must fill all fields before editing or submitting.");
+      return;
+    }
+
+    console.log("About to submit recipe");
+    facade.addEditObj(recipe);
+    // Empty out the fields and set new recipe.
+    setRecipe({ ...emptyRecipe });
+    event.preventDefault();
+  };
+
+  useEffect(
+    () =>
+      setRecipe({
+        ...newRecipe
+      }),
+    [newRecipe]
+  );
+
+  const buttonName = recipe.id === 0 ? "Save" : "Edit";
+
+  return (
+    <div>
+      <form className="form-horizontal" onChange={handleChange}>
+        <div className="form-group">
+          <label className="control-label col-sm-3">Id:</label>
+          <div className="col-sm-9">
+            <input
+              className="form-control"
+              readOnly
+              id="id"
+              value={recipe.id}
+            />
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="control-label col-sm-3" htmlFor="name">
+            Name:
+          </label>
+          <div className="col-sm-9">
+            <input
+              className="form-control"
+              id="name"
+              value={recipe.name}
+              placeholder="Enter Name"
+            />
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="control-label col-sm-3" htmlFor="age">
+            Directions:
+          </label>
+          <div className="col-sm-9">
+            <input
+              type="text"
+              className="form-control"
+              id="directions"
+              value={recipe.directions}
+              placeholder="Enter age"
+            />
+          </div>
+        </div>
+        <div className="form-group">
+          <label className="control-label col-sm-3" htmlFor="email">
+            Preparation Time:
+          </label>
+          <div className="col-sm-9">
+            <input
+              type="number"
+              className="form-control"
+              id="preparation_time"
+              value={recipe.preparation_time}
+              placeholder="Enter email"
+            />
+          </div>
+        </div>
+
+        <div className="form-group">
+          <div className="col-sm-offset-3 col-sm-9">
+            <button
+              type="submit"
+              onClick={handleSubmit}
+              className="btn btn-primary"
+            >
+              {buttonName}
+            </button>
+            <button
+              style={{ marginLeft: 5 }}
+              type="button"
+              className="btn btn-dark"
+              onClick={() => {
+                setRecipe({ ...emptyRecipe });
+              }}
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      </form>
+      <p>{JSON.stringify(recipe)}</p>
+    </div>
   );
 };
 
