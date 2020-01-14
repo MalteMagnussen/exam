@@ -14,3 +14,16 @@ A link to your Deployed Client Application
 
 A link to your Deployed backend server
 	- https://maltemagnussen.com/exam/
+
+Test Users:
+
+ADMINROLE:
+username: admin
+password: admin
+
+USERROLE:
+username: user
+password: user
+
+
+How far I got:

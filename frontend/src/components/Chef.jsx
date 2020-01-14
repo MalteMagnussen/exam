@@ -16,9 +16,14 @@ const ChefPage = () => {
   const [recipes, setRecipes] = useState();
   const [menu, setMenu] = useState([]);
   const [msg, setMsg] = useState("");
+  const [filter, setFilter] = useState("");
 
   // Updates List of items when refresh button is clicked and on load.
   useEffect(() => {
+    updateList();
+  }, []);
+
+  const updateList = () => {
     // UPDATE ITEMLIST
     facade
       .fetchGetData("restaurant/recipe")
@@ -30,7 +35,23 @@ const ChefPage = () => {
           console.log("Network error");
         }
       });
-  }, []);
+  };
+
+  /*
+  "ingredient_listDTO":[{"amount":20,"id":7,"itemDTO":{"id":2,"name":"ris","price_pr_kg":"1000"}},{"amount":70,"id":11,"itemDTO":{"id":7,"name":"laks","price_pr_kg":"10000"}},{"amount":10,"id":15,"itemDTO":{"id":3,"name":"kartofler","price_pr_kg":"900"}}] 
+  */
+  const MyFilter = () => {
+    setRecipes(
+      recipes.filter(item => {
+        let names = [];
+        item.ingredient_listDTO.forEach(ingredient => {
+          if (ingredient.itemDTO.name === filter)
+            names.push(ingredient.itemDTO.name);
+        });
+        if (names.length > 0) return item; // This is really hacky, but it works. I was kinda tired at this point.
+      })
+    );
+  };
 
   const handleMenu = item => {
     if (menu.length >= 7) {
@@ -61,6 +82,23 @@ const ChefPage = () => {
       <Row>
         <Col>
           <h5>Item Table</h5>
+          <h6>Filter by ingredient.</h6>
+          <input
+            type="text"
+            value={filter}
+            onChange={e => setFilter(e.target.value)}
+            placeholder="Search for ingredients"
+          ></input>
+          <button type="button" className="btn btn-primary" onClick={MyFilter}>
+            Filter
+          </button>
+          <button
+            type="button"
+            className="btn btn-secondary"
+            onClick={updateList}
+          >
+            Cancel Filter
+          </button>
           {recipes && (
             <Table>
               <thead>
@@ -69,6 +107,7 @@ const ChefPage = () => {
                   <th>Name</th>
                   <th>Directions</th>
                   <th>Prep Time in seconds</th>
+                  <th>Total Price</th>
                   <th>Put in Menu</th>
                 </tr>
               </thead>
@@ -79,6 +118,9 @@ const ChefPage = () => {
                     <td>{item.name}</td>
                     <td>{item.directions}</td>
                     <td>{item.preparation_time}</td>
+                    <td>
+                      <CalculateTotalPrice item={item} />
+                    </td>
                     <td>
                       <button
                         type="button"
@@ -110,6 +152,15 @@ const ChefPage = () => {
       <br />
     </>
   );
+};
+
+const CalculateTotalPrice = ({ item }) => {
+  let price = 0;
+  item.ingredient_listDTO.map(
+    item => (price = price + item.amount * item.itemDTO.price_pr_kg)
+  );
+  price = price / 100;
+  return <>{price}.-</>;
 };
 
 const Menu = ({ menu, setMenu }) => {
