@@ -13,12 +13,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author Malte
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Week_menu_plan.getAll", query = "SELECT h FROM Week_menu_plan h"),
+    @NamedQuery(name = "Week_menu_plan.deleteAllRows", query = "DELETE FROM Week_menu_plan")
+})
 public class Week_menu_plan implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,48 +41,36 @@ public class Week_menu_plan implements Serializable {
         this.recipe_list = new ArrayList();
     }
 
-    /**
-     * Get the value of year
-     *
-     * @return the value of year
-     */
-    public int getYear() {
-        return year_;
-    }
-
-    /**
-     * Set the value of year
-     *
-     * @param year_
-     */
-    public void setYear(int year_) {
-        this.year_ = year_;
-    }
-
-    /**
-     * Get the value of week_num
-     *
-     * @return the value of week_num
-     */
-    public int getWeek_num() {
-        return week_num;
-    }
-
-    /**
-     * Set the value of week_num
-     *
-     * @param week_num new value of week_num
-     */
-    public void setWeek_num(int week_num) {
-        this.week_num = week_num;
-    }
-
     public int getId() {
         return id;
     }
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<Recipe> getRecipe_list() {
+        return recipe_list;
+    }
+
+    public void setRecipe_list(List<Recipe> recipe_list) {
+        this.recipe_list = recipe_list;
+    }
+
+    public int getWeek_num() {
+        return week_num;
+    }
+
+    public void setWeek_num(int week_num) {
+        this.week_num = week_num;
+    }
+
+    public int getYear_() {
+        return year_;
+    }
+
+    public void setYear_(int year_) {
+        this.year_ = year_;
     }
 
 }
