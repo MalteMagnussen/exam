@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -244,7 +246,9 @@ public class RestaurantFacadeTest {
         expResult.add(new ItemDTO(tomat));
         expResult.add(new ItemDTO(laks));
         List<ItemDTO> result = instance.getItems();
-        assertEquals(expResult, result);
+        System.out.println("RESULT: "+result);
+        System.out.println("EXPECTED RESULT: " + expResult);
+        assertThat(result, containsInAnyOrder(expResult.toArray()));
     }
 
     /**
@@ -339,89 +343,90 @@ public class RestaurantFacadeTest {
     @Test
     public void testGetWeeks() {
         System.out.println("getWeeks");
-        RestaurantFacade instance = null;
-        List<WeekDTO> expResult = null;
+        
+        WeekDTO week = new WeekDTO();
+        week.setWeek_num(20);
+        week.setYear_(2020);
+        
+        List<RecipeDTO> expResult = new ArrayList();
+        expResult.add(new RecipeDTO(risLaks));
+        expResult.add(new RecipeDTO(pastaLaks));
+        expResult.add(new RecipeDTO(kartoflerLaks));
+        expResult.add(new RecipeDTO(tomatGulerod));
+        expResult.add(new RecipeDTO(ostTomat));
+        expResult.add(new RecipeDTO(ostKartofler));
+        expResult.add(new RecipeDTO(pastaOst));
+        week.setRecipe_list(expResult);
+        
+        List<WeekDTO> expectedResult = new ArrayList();
+        expectedResult.add(week);
+        
         List<WeekDTO> result = instance.getWeeks();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(expectedResult, result);
     }
 
-    /**
-     * Test of checkStorageHelper method, of class RestaurantFacade.
-     */
-    @Test
-    public void testCheckStorageHelper() {
-        System.out.println("checkStorageHelper");
-        List<IngredientDTO> ingredients = null;
-        RestaurantFacade instance = null;
-        String expResult = "";
-        String result = instance.checkStorageHelper(ingredients);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of addRecipe method, of class RestaurantFacade.
-     */
-    @Test
-    public void testAddRecipe() {
-        System.out.println("addRecipe");
-        RecipeDTO recipeDTO = null;
-        RestaurantFacade instance = null;
-        RecipeDTO expResult = null;
-        RecipeDTO result = instance.addRecipe(recipeDTO);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of editRecipe method, of class RestaurantFacade.
-     */
-    @Test
-    public void testEditRecipe() {
-        System.out.println("editRecipe");
-        RecipeDTO recipeDTO = null;
-        RestaurantFacade instance = null;
-        RecipeDTO expResult = null;
-        RecipeDTO result = instance.editRecipe(recipeDTO);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of deleteRecipe method, of class RestaurantFacade.
-     */
-    @Test
-    public void testDeleteRecipe() {
-        System.out.println("deleteRecipe");
-        int id = 0;
-        RestaurantFacade instance = null;
-        RecipeDTO expResult = null;
-        RecipeDTO result = instance.deleteRecipe(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of addIngredient method, of class RestaurantFacade.
-     */
-    @Test
-    public void testAddIngredient() {
-        System.out.println("addIngredient");
-        int itemId = 0;
-        int amount = 0;
-        int recipeId = 0;
-        RestaurantFacade instance = null;
-        IngredientDTO expResult = null;
-        IngredientDTO result = instance.addIngredient(itemId, amount, recipeId);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+    
+    // Kl er nu 01. 
+//    /**
+//     * Test of addRecipe method, of class RestaurantFacade.
+//     */
+//    @Test
+//    public void testAddRecipe() {
+//        System.out.println("addRecipe");
+//        RecipeDTO recipeDTO = null;
+//        RestaurantFacade instance = null;
+//        RecipeDTO expResult = null;
+//        RecipeDTO result = instance.addRecipe(recipeDTO);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of editRecipe method, of class RestaurantFacade.
+//     */
+//    @Test
+//    public void testEditRecipe() {
+//        System.out.println("editRecipe");
+//        RecipeDTO recipeDTO = null;
+//        RestaurantFacade instance = null;
+//        RecipeDTO expResult = null;
+//        RecipeDTO result = instance.editRecipe(recipeDTO);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of deleteRecipe method, of class RestaurantFacade.
+//     */
+//    @Test
+//    public void testDeleteRecipe() {
+//        System.out.println("deleteRecipe");
+//        int id = 0;
+//        RestaurantFacade instance = null;
+//        RecipeDTO expResult = null;
+//        RecipeDTO result = instance.deleteRecipe(id);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
+//
+//    /**
+//     * Test of addIngredient method, of class RestaurantFacade.
+//     */
+//    @Test
+//    public void testAddIngredient() {
+//        System.out.println("addIngredient");
+//        int itemId = 0;
+//        int amount = 0;
+//        int recipeId = 0;
+//        RestaurantFacade instance = null;
+//        IngredientDTO expResult = null;
+//        IngredientDTO result = instance.addIngredient(itemId, amount, recipeId);
+//        assertEquals(expResult, result);
+//        // TODO review the generated test code and remove the default call to fail.
+//        fail("The test case is a prototype.");
+//    }
 
 }

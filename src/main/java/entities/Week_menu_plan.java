@@ -34,8 +34,10 @@ public class Week_menu_plan implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     // Ordered list of 7 recipes.
-    @ManyToMany
+    
+    @ManyToMany(mappedBy = "week_menu_plan")
     private List<Recipe> recipe_list;
+    
     private int week_num; // Week Number
     private int year_;
 

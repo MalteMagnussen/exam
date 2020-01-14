@@ -41,9 +41,11 @@ public class Recipe implements Serializable {
     private String name;
     @OneToMany(mappedBy = "recipe")
     private List<Ingredient> ingredient_list;
-    @ManyToMany(mappedBy = "recipe_list")
+    
+    @ManyToMany
     private List<Week_menu_plan> week_menu_plan;
 
+    
     public Recipe() {
         this.week_menu_plan = new ArrayList();
         this.ingredient_list = new ArrayList();
