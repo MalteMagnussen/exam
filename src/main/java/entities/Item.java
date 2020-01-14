@@ -5,17 +5,20 @@
  */
 package entities;
 
+import dto.ItemDTO;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Malte
  */
 @Entity
+@XmlRootElement
 public class Item implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -27,6 +30,12 @@ public class Item implements Serializable {
     private int price_pr_kg; // Price in 1/100 dkk. ( Pris i ører )
 
     public Item() {
+    }
+
+    public Item(ItemDTO itemDTO) {
+        this.id = itemDTO.getId();
+        this.name = itemDTO.getName();
+        this.price_pr_kg = itemDTO.getKg_price();
     }
 
     /**

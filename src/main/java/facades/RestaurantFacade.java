@@ -5,6 +5,7 @@
  */
 package facades;
 
+import dto.ItemDTO;
 import entities.Ingredient;
 import entities.Item;
 import entities.Recipe;
@@ -29,7 +30,7 @@ public class RestaurantFacade implements RestaurantInterface {
      * @param _emf
      * @return an instance of this facade class.
      */
-    public static RestaurantFacade getKrakFacade(EntityManagerFactory _emf) {
+    public static RestaurantFacade getRestaurantFacade(EntityManagerFactory _emf) {
         if (facade == null) {
             emf = _emf;
             facade = new RestaurantFacade();
@@ -72,22 +73,19 @@ public class RestaurantFacade implements RestaurantInterface {
     }
 
     @Override
-    public Item addItem(String name, int price_pr_kg) {
+    public ItemDTO addItem(ItemDTO itemDTO) {
         // Make item
-        Item item = new Item();
-        item.setName(name);
-        item.setPrice_pr_kg(price_pr_kg);
+        Item item = new Item(itemDTO);
 
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
             em.persist(item);
             em.getTransaction().commit();
-            return item;
+            return new ItemDTO(item);
         } finally {
             em.close();
         }
-
     }
 
 }

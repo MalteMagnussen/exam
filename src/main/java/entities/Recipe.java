@@ -14,12 +14,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Malte
  */
 @Entity
+@XmlRootElement
 public class Recipe implements Serializable {
 
     private static final long serialVersionUID = 1L;

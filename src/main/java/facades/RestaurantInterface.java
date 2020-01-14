@@ -5,6 +5,7 @@
  */
 package facades;
 
+import dto.ItemDTO;
 import entities.Ingredient;
 import entities.Item;
 import entities.Recipe;
@@ -89,6 +90,6 @@ public interface RestaurantInterface {
     // CRUD RECIPE END.
     
     // CRUD ITEM START
-    public Item addItem(String name, int price_pr_kg);
+    public ItemDTO addItem(ItemDTO item);
     // CRUD ITEM END
 }
