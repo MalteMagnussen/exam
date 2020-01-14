@@ -7,6 +7,7 @@ package entities;
 
 import dto.ItemDTO;
 import java.io.Serializable;
+import java.util.Objects;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -34,6 +35,11 @@ public class Item implements Serializable {
     private int price_pr_kg; // Price in 1/100 dkk. ( Pris i ører )
 
     public Item() {
+    }
+
+    public Item(String name, int price_pr_kg) {
+        this.name = name;
+        this.price_pr_kg = price_pr_kg;
     }
 
     public Item(ItemDTO itemDTO) {
@@ -88,19 +94,28 @@ public class Item implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (int) id;
+        int hash = 3;
+        hash = 79 * hash + Objects.hashCode(this.name);
+        hash = 79 * hash + this.price_pr_kg;
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Item)) {
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
             return false;
         }
-        Item other = (Item) object;
-        if (this.id != other.id) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Item other = (Item) obj;
+        if (this.price_pr_kg != other.price_pr_kg) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
             return false;
         }
         return true;
@@ -108,7 +123,7 @@ public class Item implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.item[ id=" + id + " ]";
+        return "Item{" + "id=" + id + ", name=" + name + ", price_pr_kg=" + price_pr_kg + '}';
     }
 
 }

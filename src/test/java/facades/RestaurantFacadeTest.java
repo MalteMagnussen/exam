@@ -7,6 +7,7 @@ package facades;
 
 import dto.ItemDTO;
 import entities.Ingredient;
+import entities.Item;
 import entities.Recipe;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -26,6 +27,8 @@ import utils.EMF_Creator;
 public class RestaurantFacadeTest {
    private static EntityManagerFactory emf;
     private static RestaurantFacade facade;
+    
+    private static Item pasta;
 
     public RestaurantFacadeTest() {
     }
@@ -34,14 +37,19 @@ public class RestaurantFacadeTest {
     public static void setUpClass() {
         emf = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.TEST, EMF_Creator.Strategy.DROP_AND_CREATE);
         facade = RestaurantFacade.getRestaurantFacade(emf);
-        
+        //  MAKE TEST DATA HERE
+         //  MAKE TEST DATA HERE
+         //  MAKE TEST DATA HERE
+         //  MAKE TEST DATA HERE
+        pasta = new Item("pasta", 1000);
     }
 
     @BeforeEach
     public void setUp() {
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
-        
+        //  PERSIST TEST DATA HERE
+        em.persist(pasta);
         em.getTransaction().commit();
         em.close();
     }
@@ -52,12 +60,21 @@ public class RestaurantFacadeTest {
         try {
             em.getTransaction().begin();
             em.createNamedQuery("Item.deleteAllRows").executeUpdate();
+            //  DELETE TEST DATA HERE
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
         } finally {
             em.close();
         }
+    }
+    
+    @Test
+    public void testAdminAddItem() {
+        System.out.println("adminAddItem");
+        ItemDTO expResult = new ItemDTO(new Item("pasta", 1000));
+        ItemDTO result = facade.addItem(expResult);
+        assertEquals(expResult, result);
     }
 
     
