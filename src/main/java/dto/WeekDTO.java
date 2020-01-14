@@ -8,6 +8,7 @@ package dto;
 import entities.Week_menu_plan;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -23,7 +24,7 @@ public class WeekDTO {
     public WeekDTO() {
         this.recipe_list = new ArrayList();
     }
-    
+
     public WeekDTO(Week_menu_plan week) {
         this.recipe_list = new ArrayList();
         week.getRecipe_list().forEach((recipe) -> {
@@ -64,6 +65,44 @@ public class WeekDTO {
 
     public void setYear_(int year_) {
         this.year_ = year_;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 43 * hash + Objects.hashCode(this.recipe_list);
+        hash = 43 * hash + this.week_num;
+        hash = 43 * hash + this.year_;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final WeekDTO other = (WeekDTO) obj;
+        if (this.week_num != other.week_num) {
+            return false;
+        }
+        if (this.year_ != other.year_) {
+            return false;
+        }
+        if (!Objects.equals(this.recipe_list, other.recipe_list)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "WeekDTO{" + "id=" + id + ", recipe_list=" + recipe_list + ", week_num=" + week_num + ", year_=" + year_ + '}';
     }
 
 }

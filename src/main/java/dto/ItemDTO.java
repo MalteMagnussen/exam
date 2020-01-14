@@ -52,15 +52,10 @@ public class ItemDTO {
     }
 
     @Override
-    public String toString() {
-        return "ItemDTO{" + "name=" + name + ", price_pr_kg=" + price_pr_kg + '}';
-    }
-
-    @Override
     public int hashCode() {
         int hash = 7;
-        hash = 43 * hash + Objects.hashCode(this.name);
-        hash = 43 * hash + Objects.hashCode(this.price_pr_kg);
+        hash = 29 * hash + Objects.hashCode(this.name);
+        hash = 29 * hash + Objects.hashCode(this.price_pr_kg);
         return hash;
     }
 
@@ -84,7 +79,10 @@ public class ItemDTO {
         }
         return true;
     }
-    
-    
+
+    @Override
+    public String toString() {
+        return "ItemDTO{" + "id=" + id + ", name=" + name + ", price_pr_kg=" + price_pr_kg + '}';
+    }
 
 }

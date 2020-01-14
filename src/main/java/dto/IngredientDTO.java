@@ -6,6 +6,7 @@
 package dto;
 
 import entities.Ingredient;
+import java.util.Objects;
 
 /**
  *
@@ -48,6 +49,40 @@ public class IngredientDTO {
 
     public void setItemDTO(ItemDTO itemDTO) {
         this.itemDTO = itemDTO;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 47 * hash + this.amount;
+        hash = 47 * hash + Objects.hashCode(this.itemDTO);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final IngredientDTO other = (IngredientDTO) obj;
+        if (this.amount != other.amount) {
+            return false;
+        }
+        if (!Objects.equals(this.itemDTO, other.itemDTO)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "IngredientDTO{" + "id=" + id + ", amount=" + amount + ", itemDTO=" + itemDTO + '}';
     }
 
 }

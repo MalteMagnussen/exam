@@ -7,6 +7,7 @@ package dto;
 
 import entities.Recipe;
 import java.util.List;
+import java.util.Objects;
 
 /**
  *
@@ -47,7 +48,6 @@ public class RecipeDTO {
 //    public void setPrice(int price) {
 //        this.price = price;
 //    }
-
     public int getId() {
         return id;
     }
@@ -86,6 +86,48 @@ public class RecipeDTO {
 
     public void setIngredient_listDTO(List<IngredientDTO> ingredient_listDTO) {
         this.ingredient_listDTO = ingredient_listDTO;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + this.preparation_time;
+        hash = 79 * hash + Objects.hashCode(this.directions);
+        hash = 79 * hash + Objects.hashCode(this.name);
+        hash = 79 * hash + Objects.hashCode(this.ingredient_listDTO);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final RecipeDTO other = (RecipeDTO) obj;
+        if (this.preparation_time != other.preparation_time) {
+            return false;
+        }
+        if (!Objects.equals(this.directions, other.directions)) {
+            return false;
+        }
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.ingredient_listDTO, other.ingredient_listDTO)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "RecipeDTO{" + "id=" + id + ", preparation_time=" + preparation_time + ", directions=" + directions + ", name=" + name + ", ingredient_listDTO=" + ingredient_listDTO + '}';
     }
 
 }

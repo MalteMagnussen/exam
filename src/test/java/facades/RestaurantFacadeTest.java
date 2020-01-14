@@ -13,6 +13,8 @@ import dto.WeekDTO;
 import entities.Ingredient;
 import entities.Item;
 import entities.Recipe;
+import entities.Storage;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -31,7 +33,7 @@ import utils.EMF_Creator;
 public class RestaurantFacadeTest {
 
     private static EntityManagerFactory emf;
-    private static RestaurantFacade facade;
+    private static RestaurantFacade instance;
 
     private static Item pasta;
     private static Item ris;
@@ -70,7 +72,7 @@ public class RestaurantFacadeTest {
     @BeforeAll
     public static void setUpClass() {
         emf = EMF_Creator.createEntityManagerFactory(EMF_Creator.DbSelector.TEST, EMF_Creator.Strategy.DROP_AND_CREATE);
-        facade = RestaurantFacade.getRestaurantFacade(emf);
+        instance = RestaurantFacade.getRestaurantFacade(emf);
 
         // Find items
         pasta = new Item("pasta", 1000);
@@ -127,7 +129,7 @@ public class RestaurantFacadeTest {
 //            ostTomat.add(tomat_2);
         ost_1.setRecipe(ostTomat);
         tomat_2.setRecipe(ostTomat);
-        
+
         ostKartofler = new Recipe("ost i kartolfer", "ost og kartofler", 5000);
 //            ostKartofler.add(ost_2);
 //            ostKartofler.add(kartofler_2);
@@ -185,7 +187,7 @@ public class RestaurantFacadeTest {
         em.persist(laks_1);
         em.persist(laks_2);
         em.persist(laks_3);
-        
+
         em.getTransaction().commit();
         em.close();
     }
@@ -208,50 +210,9 @@ public class RestaurantFacadeTest {
     @Test
     public void testAdminAddItem() {
         System.out.println("adminAddItem");
-        ItemDTO expResult = new ItemDTO(new Item("pasta", 1000));
-        ItemDTO result = facade.addItem(expResult);
+        ItemDTO expResult = new ItemDTO(pasta);
+        ItemDTO result = instance.addItem(expResult);
         assertEquals(expResult, result);
-    }
-
-    /**
-     * Test of getRestaurantFacade method, of class RestaurantFacade.
-     */
-    @Test
-    public void testGetRestaurantFacade() {
-        System.out.println("getRestaurantFacade");
-        EntityManagerFactory _emf = null;
-        RestaurantFacade expResult = null;
-        RestaurantFacade result = RestaurantFacade.getRestaurantFacade(_emf);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of populateWithRecipes method, of class RestaurantFacade.
-     */
-    @Test
-    public void testPopulateWithRecipes() {
-        System.out.println("populateWithRecipes");
-        RestaurantFacade instance = null;
-        instance.populateWithRecipes();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of addItem method, of class RestaurantFacade.
-     */
-    @Test
-    public void testAddItem() {
-        System.out.println("addItem");
-        ItemDTO itemDTO = null;
-        RestaurantFacade instance = null;
-        ItemDTO expResult = null;
-        ItemDTO result = instance.addItem(itemDTO);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -260,13 +221,12 @@ public class RestaurantFacadeTest {
     @Test
     public void testAddStorage() {
         System.out.println("addStorage");
-        StorageDTO storageDTO = null;
-        RestaurantFacade instance = null;
-        StorageDTO expResult = null;
+        Storage storage = new Storage(111);
+        storage.setItem(pasta);
+        StorageDTO storageDTO = new StorageDTO(storage);
+        StorageDTO expResult = new StorageDTO(storage);
         StorageDTO result = instance.addStorage(storageDTO);
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -275,12 +235,16 @@ public class RestaurantFacadeTest {
     @Test
     public void testGetItems() {
         System.out.println("getItems");
-        RestaurantFacade instance = null;
-        List<ItemDTO> expResult = null;
+        List<ItemDTO> expResult = new ArrayList();
+        expResult.add(new ItemDTO(pasta));
+        expResult.add(new ItemDTO(ris));
+        expResult.add(new ItemDTO(kartofler));
+        expResult.add(new ItemDTO(gulerod));
+        expResult.add(new ItemDTO(ost));
+        expResult.add(new ItemDTO(tomat));
+        expResult.add(new ItemDTO(laks));
         List<ItemDTO> result = instance.getItems();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -289,42 +253,59 @@ public class RestaurantFacadeTest {
     @Test
     public void testGetStorage() {
         System.out.println("getStorage");
-        RestaurantFacade instance = null;
-        List<StorageDTO> expResult = null;
+        Storage storage = new Storage(111);
+        storage.setItem(pasta);
+        StorageDTO storageDTO = new StorageDTO(storage);
+
+        List<StorageDTO> expResult = new ArrayList();
+        expResult.add(storageDTO);
+
         List<StorageDTO> result = instance.getStorage();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
-    /**
-     * Test of updateStorage method, of class RestaurantFacade.
-     */
-    @Test
-    public void testUpdateStorage() {
-        System.out.println("updateStorage");
-        int amount = 0;
-        int itemID = 0;
-        RestaurantFacade instance = null;
-        StorageDTO expResult = null;
-        StorageDTO result = instance.updateStorage(amount, itemID);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
-
+    // Can't test this. It requires the ID of the item. Which changes all the time in the test database.
+//    /**
+//     * Test of updateStorage method, of class RestaurantFacade.
+//     */
+//    @Test
+//    public void testUpdateStorage() {
+//        System.out.println("updateStorage");
+//        Storage storage = new Storage(111);
+//        storage.setItem(pasta);
+//        StorageDTO expResult = new StorageDTO(storage);
+//        
+//        StorageDTO result = instance.updateStorage(111, 1);
+//        
+//        assertEquals(expResult, result);
+//    }
     /**
      * Test of getRecipes method, of class RestaurantFacade.
      */
     @Test
     public void testGetRecipes() {
         System.out.println("getRecipes");
-        RestaurantFacade instance = null;
-        List<RecipeDTO> expResult = null;
+        List<RecipeDTO> expResult = new ArrayList();
+
+        /*
+        private static Recipe risLaks;
+    private static Recipe pastaLaks;
+    private static Recipe kartoflerLaks;
+    private static Recipe tomatGulerod;
+    private static Recipe ostTomat;
+    private static Recipe ostKartofler;
+    private static Recipe pastaOst;
+         */
+        expResult.add(new RecipeDTO(risLaks));
+        expResult.add(new RecipeDTO(pastaLaks));
+        expResult.add(new RecipeDTO(kartoflerLaks));
+        expResult.add(new RecipeDTO(tomatGulerod));
+        expResult.add(new RecipeDTO(ostTomat));
+        expResult.add(new RecipeDTO(ostKartofler));
+        expResult.add(new RecipeDTO(pastaOst));
+
         List<RecipeDTO> result = instance.getRecipes();
         assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
     }
 
     /**
@@ -333,13 +314,23 @@ public class RestaurantFacadeTest {
     @Test
     public void testAddWeek() {
         System.out.println("addWeek");
-        WeekDTO weekDTO = null;
-        RestaurantFacade instance = null;
-        WeekDTO expResult = null;
+        WeekDTO weekDTO = new WeekDTO();
+
+        List<RecipeDTO> expResult = new ArrayList();
+        expResult.add(new RecipeDTO(risLaks));
+        expResult.add(new RecipeDTO(pastaLaks));
+        expResult.add(new RecipeDTO(kartoflerLaks));
+        expResult.add(new RecipeDTO(tomatGulerod));
+        expResult.add(new RecipeDTO(ostTomat));
+        expResult.add(new RecipeDTO(ostKartofler));
+        expResult.add(new RecipeDTO(pastaOst));
+
+        weekDTO.setRecipe_list(expResult);
+        weekDTO.setWeek_num(10);
+        weekDTO.setYear_(2000);
+
         WeekDTO result = instance.addWeek(weekDTO);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals(weekDTO, result);
     }
 
     /**
@@ -432,7 +423,5 @@ public class RestaurantFacadeTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-    
-    
 
 }

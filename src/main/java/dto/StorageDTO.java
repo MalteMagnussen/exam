@@ -59,9 +59,8 @@ public class StorageDTO {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 41 * hash + Objects.hashCode(this.item);
-        hash = 41 * hash + this.amount;
+        int hash = 5;
+        hash = 67 * hash + Objects.hashCode(this.item);
         return hash;
     }
 
