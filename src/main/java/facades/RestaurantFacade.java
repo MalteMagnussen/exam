@@ -17,7 +17,7 @@ import javax.persistence.EntityManagerFactory;
  *
  * @author Malte
  */
-public class RestaurantFacade implements RestaurantInterface {
+public class RestaurantFacade {
 
     private static RestaurantFacade facade;
     private static EntityManagerFactory emf;
@@ -42,37 +42,30 @@ public class RestaurantFacade implements RestaurantInterface {
         return emf.createEntityManager();
     }
 
-    @Override
     public List<Recipe> getAllRecipes() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
     public List<Recipe> getSevenRecipes(List<String> names) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
     public boolean checkStorage(Recipe recipe) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
     public Recipe addRecipe(String name, String directions, int preparation_time, List<Ingredient> ingredient_list) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
     public Recipe editRecipe(int id, String name, String directions, int preparation_time, List<Ingredient> ingredient_list) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-
-    @Override
+    
     public Recipe deleteRecipe(int id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
-    @Override
     public ItemDTO addItem(ItemDTO itemDTO) {
         // Make item
         Item item = new Item(itemDTO);
