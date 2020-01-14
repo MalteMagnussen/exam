@@ -40,6 +40,22 @@ public class Recipe implements Serializable {
         this.ingredient_list = new ArrayList();
     }
 
+    public List<Ingredient> getIngredient_list() {
+        return ingredient_list;
+    }
+
+    public void setIngredient_list(List<Ingredient> ingredient_list) {
+        this.ingredient_list = ingredient_list;
+    }
+
+    public List<Week_menu_plan> getWeek_menu_plan() {
+        return week_menu_plan;
+    }
+
+    public void setWeek_menu_plan(List<Week_menu_plan> week_menu_plan) {
+        this.week_menu_plan = week_menu_plan;
+    }
+
     /**
      * Get the value of name
      *

@@ -4,6 +4,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { LogIn, LoggedIn } from "./components/Login.jsx";
 import WelcomePage from "./components/Welcome.jsx";
 import Admin from "./components/Admin.jsx";
+import Chef from "./components/Chef.jsx";
 import {
   HashRouter as Router,
   Switch,
@@ -48,6 +49,9 @@ const App = () => {
             </Route>
             <Route path="/Jokes">
               <Jokes loggedIn={loggedIn} />
+            </Route>
+            <Route path="/chef">
+              <Chef loggedIn={loggedIn} />
             </Route>
             <Route component={NoMatch} />
           </Switch>
@@ -95,6 +99,11 @@ const Header = ({ loggedIn, setLoggedIn, roles, setRoles }) => {
       <li>
         <NavLink to="/Jokes">Jokes</NavLink>
       </li>
+      {loggedIn && (
+        <li>
+          <NavLink to="/chef">Chef panel</NavLink>
+        </li>
+      )}
       {loggedIn && roles.includes("admin") && (
         <li>
           <NavLink to="/admin">Admin panel</NavLink>

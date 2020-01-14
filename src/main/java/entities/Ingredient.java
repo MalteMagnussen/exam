@@ -33,6 +33,22 @@ public class Ingredient implements Serializable {
     public Ingredient() {
     }
 
+    public Recipe getRecipe() {
+        return recipe;
+    }
+
+    public void setRecipe(Recipe recipe) {
+        this.recipe = recipe;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
+    }
+
     /**
      * Get the value of amount
      *
