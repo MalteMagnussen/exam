@@ -84,6 +84,14 @@ const RecipesPage = () => {
             </Table>
           )}
           <br />
+          <button
+            type="button"
+            className="btn btn-primary"
+            onClick={() => setItemButton(!itemButton)}
+          >
+            Refresh list
+          </button>
+          <br />
           {JSON.stringify(recipe)}
         </Col>
         <Col>
@@ -119,7 +127,7 @@ const AddEditRecipe = ({ newRecipe, emptyRecipe, setMsg }) => {
     }
 
     console.log("About to submit recipe");
-    facade.addEditObj(recipe);
+    facade.addEditObj("restaurant/recipe", recipe);
     // Empty out the fields and set new recipe.
     setRecipe({ ...emptyRecipe });
     event.preventDefault();

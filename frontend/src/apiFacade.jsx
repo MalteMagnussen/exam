@@ -52,7 +52,7 @@ const ApiFacade = () => {
       console.log("POST");
     } else {
       // EDIT
-      const uri = URL + `/api/${ekstraURL}/${obj.id}`;
+      const uri = URL + `/api/${ekstraURL}`;
       const options = makeOptions("PUT", true, obj);
       console.log("PUT");
       fetch(uri, options).then(handleHttpErrors);
