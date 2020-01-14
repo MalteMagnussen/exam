@@ -5,6 +5,7 @@
  */
 package entities;
 
+import dto.IngredientDTO;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -43,6 +44,12 @@ public class Ingredient implements Serializable {
     public Ingredient(int amount, Item item) {
         this.amount = amount;
         this.item = item;
+    }
+
+    public Ingredient(IngredientDTO ingredient) {
+        this.id = ingredient.getId();
+        this.amount = ingredient.getAmount();
+        this.item = new Item(ingredient.getItemDTO());
     }
 
     public Recipe getRecipe() {

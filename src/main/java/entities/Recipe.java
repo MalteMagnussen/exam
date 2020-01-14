@@ -47,12 +47,12 @@ public class Recipe implements Serializable {
         this.week_menu_plan = new ArrayList();
         this.ingredient_list = new ArrayList();
     }
-    
+
     public Recipe(String directions, String name, int preparation_time) {
         this.week_menu_plan = new ArrayList();
         this.ingredient_list = new ArrayList();
         this.directions = directions;
-        this.name = name; 
+        this.name = name;
         this.preparation_time = preparation_time;
     }
 
@@ -62,9 +62,12 @@ public class Recipe implements Serializable {
         this.directions = recipe.getDirections();
         this.name = recipe.getName();
         this.preparation_time = recipe.getPreparation_time();
-        
+        recipe.getIngredient_listDTO().forEach((ingredient) -> {
+            this.ingredient_list.add(new Ingredient(ingredient));
+        });
+
     }
-    
+
     public void add(Ingredient ingredient) {
         this.ingredient_list.add(ingredient);
     }
