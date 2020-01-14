@@ -50,16 +50,6 @@ public class RestaurantResource {
         return FACADE.addItem(item);
     }
     
-    @POST
-    @Path("storage/add")
-    @Consumes({MediaType.APPLICATION_JSON})
-    @Produces({MediaType.APPLICATION_JSON})
-    @RolesAllowed({"admin"})
-    public StorageDTO adminAddStorage(StorageDTO storage) {
-        System.out.println("Storade added: " + storage);
-        return FACADE.addStorage(storage);
-    }
-    
     @GET
     @Path("items")
     @Produces({MediaType.APPLICATION_JSON})
@@ -74,6 +64,14 @@ public class RestaurantResource {
     @RolesAllowed({"admin"})
     public List<StorageDTO> getStorage() {
         return FACADE.getStorage();
+    }
+    
+    @GET
+    @Path("storage/{id}/{amount}")
+    @Produces({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin"})
+    public StorageDTO adminAddStorage(@PathParam("id") int id, @PathParam("amount") int amount) {
+        return FACADE.updateStorage(amount, id);
     }
 
 //    @GET

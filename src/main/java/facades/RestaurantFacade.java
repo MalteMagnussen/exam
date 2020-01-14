@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.NoResultException;
 
 /**
  *
@@ -100,6 +101,26 @@ public class RestaurantFacade {
                 storagesDTO.add(new StorageDTO(storage));
             });
             return storagesDTO;
+        } finally {
+            em.close();
+        }
+    }
+    
+    public StorageDTO updateStorage(int amount, int itemID) {
+        EntityManager em = getEntityManager();
+        try { 
+            em.getTransaction().begin();
+            Storage storage = em.createNamedQuery("Storage.findStorage", Storage.class).setParameter("id", itemID).getSingleResult();
+            storage.setAmount(amount);
+            em.merge(storage);
+            em.getTransaction().commit();
+            return new StorageDTO(storage);
+        } catch( NoResultException e ){
+            ItemDTO itemDTO;
+            Item item = em.find(Item.class, itemID);
+            itemDTO = new ItemDTO(item);
+            StorageDTO storage = new StorageDTO(itemDTO, amount, itemID);
+            return addStorage(storage);
         } finally {
             em.close();
         }

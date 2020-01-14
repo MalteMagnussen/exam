@@ -176,19 +176,50 @@ const CreateItem = () => {
 };
 
 const StockItem = ({ stockItem }) => {
+  const [message, setMessage] = useState("");
+  const [amount, setAmount] = useState();
+
+  const updateStorage = (id, amount) => {
+    facade
+      .fetchGetData("restaurant/storage/" + id + "/" + amount)
+      .then(res => setMessage(res))
+      .catch(err => {
+        if (err.status) {
+          err.fullError.then(e => console.log(e.code, e.message));
+        } else {
+          console.log("Network error");
+        }
+      });
+  };
+
   return (
     <>
       <h3>Stock an Item</h3>
-      {/*<DropdownButton id="dropdown-basic-button" title="Add Stock">
-            {itemList &&
-              itemList.forEach(item => (
-                <Dropdown.Item key={item.id} onClick={() => setStockItem(item)}>
-                  {item.name}
-                </Dropdown.Item>
-              ))}
-              </DropdownButton>*/}
-      How many of {stockItem.name} would you like to Stock?
-      <input type="number"></input>
+      {message && JSON.stringify(message)}
+      <br />
+      {stockItem && (
+        <>
+          How many of + {stockItem.name} + would you like to Stock?
+          <input
+            type="number"
+            placeholder="Amount you'd like to update the stock to."
+            onChange={e => {
+              setAmount(e.currentTarget.value);
+            }}
+          ></input>
+          <button
+            className="btn btn-success"
+            onClick={() => {
+              setMessage("");
+              updateStorage(stockItem.id, amount);
+            }}
+          >
+            Update Stock
+          </button>
+        </>
+      )}
+      <br />
+      Stock Amount: {JSON.stringify(amount)}
       <br />
       {JSON.stringify(stockItem)}
     </>
