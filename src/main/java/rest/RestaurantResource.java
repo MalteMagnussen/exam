@@ -3,6 +3,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dto.ItemDTO;
+import dto.StorageDTO;
 import utils.EMF_Creator;
 import facades.RestaurantFacade;
 import java.util.List;
@@ -47,6 +48,16 @@ public class RestaurantResource {
     public ItemDTO adminAddHobby(ItemDTO item) {
         System.out.println("item/add: "+ item);
         return FACADE.addItem(item);
+    }
+    
+    @POST
+    @Path("storage/add")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin"})
+    public StorageDTO adminAddStorage(StorageDTO storage) {
+        System.out.println("Storade added: " + storage);
+        return FACADE.addStorage(storage);
     }
 
 //    @GET

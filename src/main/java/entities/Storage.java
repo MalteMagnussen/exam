@@ -5,6 +5,7 @@
  */
 package entities;
 
+import dto.StorageDTO;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,6 +42,12 @@ public class Storage implements Serializable {
         this.amount = amount;
     }
 
+    public Storage(StorageDTO storageDTO) {
+        this.amount = storageDTO.getAmount();
+        this.item = new Item(storageDTO.getItem());
+        this.id = storageDTO.getId();
+    }
+
     /**
      * Get the value of amount
      *
@@ -65,6 +72,14 @@ public class Storage implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void setItem(Item item) {
+        this.item = item;
     }
 
 }

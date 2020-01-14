@@ -6,9 +6,11 @@
 package facades;
 
 import dto.ItemDTO;
+import dto.StorageDTO;
 import entities.Ingredient;
 import entities.Item;
 import entities.Recipe;
+import entities.Storage;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -76,6 +78,19 @@ public class RestaurantFacade {
             em.persist(item);
             em.getTransaction().commit();
             return new ItemDTO(item);
+        } finally {
+            em.close();
+        }
+    }
+    
+    public StorageDTO addStorage(StorageDTO storageDTO) {
+        Storage storage = new Storage(storageDTO);
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.persist(storage);
+            em.getTransaction().commit();
+            return new StorageDTO(storage);
         } finally {
             em.close();
         }
