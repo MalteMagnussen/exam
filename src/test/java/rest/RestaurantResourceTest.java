@@ -6,20 +6,26 @@
 package rest;
 
 import dto.ItemDTO;
+import entities.Item;
 import facades.RestaurantFacade;
 import static org.junit.jupiter.api.Assertions.*;
 import entities.Role;
 import entities.User;
 import io.restassured.RestAssured;
 import static io.restassured.RestAssured.given;
+import static io.restassured.RestAssured.with;
+import io.restassured.http.ContentType;
 import io.restassured.parsing.Parser;
 import java.net.URI;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.ws.rs.core.UriBuilder;
 import org.glassfish.grizzly.http.server.HttpServer;
+import org.glassfish.grizzly.http.util.HttpStatus;
 import org.glassfish.jersey.grizzly2.httpserver.GrizzlyHttpServerFactory;
 import org.glassfish.jersey.server.ResourceConfig;
+import org.hamcrest.MatcherAssert;
+import static org.hamcrest.Matchers.equalTo;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,6 +56,8 @@ public class RestaurantResourceTest {
     public RestaurantResourceTest() {
     }
 
+    private static Item pasta;
+    
     @BeforeAll
     public static void setUpClass() {
         // Grizzly Start
@@ -66,6 +74,7 @@ public class RestaurantResourceTest {
 
         facade = RestaurantFacade.getRestaurantFacade(emf);
         
+        pasta = new Item("pasta", 1000);
          //  MAKE TEST DATA HERE
          //  MAKE TEST DATA HERE
          //  MAKE TEST DATA HERE
@@ -101,6 +110,8 @@ public class RestaurantResourceTest {
         em.persist(nobody);
         System.out.println("Saved test data to database");
         // Users end
+        
+        em.persist(pasta);
 
         em.getTransaction().commit();
         em.close();
@@ -148,6 +159,31 @@ public class RestaurantResourceTest {
 
     private void logOut() {
         securityToken = null;
+    }
+    
+    @Test
+    public void testAdminAddItem() {
+        System.out.println("adminAddItem");
+        login("admin", "test");
+
+        // Arrange
+        ItemDTO expResult = new ItemDTO(pasta);
+
+        ItemDTO result
+                = with()
+                        .body(expResult)
+                        .contentType("application/json")
+                        .accept(ContentType.JSON)
+                        .header("x-access-token", securityToken)
+                        .when().request("POST", "restaurant/item/add").then()
+                        .assertThat().log().body()
+                        .statusCode(HttpStatus.OK_200.getStatusCode())
+                        .extract()
+                        .as(ItemDTO.class);//extract result JSON as object
+
+        //Assert
+        MatcherAssert.assertThat((result), equalTo(expResult));
+
     }
 
     
