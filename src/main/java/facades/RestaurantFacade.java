@@ -274,6 +274,11 @@ public class RestaurantFacade {
         try {
             em.getTransaction().begin();
             Week_menu_plan week = new Week_menu_plan(weekDTO);
+            
+            // TODO find all recipes related to this week menu, then set it on. 
+            // TODO in frontend - Send the week plan to backend. 
+            // Very tired now. 
+            
             em.persist(week);
             em.getTransaction().commit();
             return new WeekDTO(week);
