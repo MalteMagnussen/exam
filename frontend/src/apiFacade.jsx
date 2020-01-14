@@ -54,9 +54,16 @@ const ApiFacade = () => {
       // EDIT
       const uri = URL + `/api/${ekstraURL}/${obj.id}`;
       const options = makeOptions("PUT", true, obj);
-      fetch(uri, options).then(handleHttpErrors);
       console.log("PUT");
+      fetch(uri, options).then(handleHttpErrors);
     }
+  }
+
+  function myPost(ekstraURL, obj) {
+    const uri = URL + `/api/${ekstraURL}`;
+    let options = makeOptions("POST", true, obj);
+    console.log("POST");
+    return fetch(uri, options).then(handleHttpErrors);
   }
 
   /**
@@ -118,7 +125,8 @@ const ApiFacade = () => {
     logout,
     fetchGetData,
     addEditObj,
-    deleteObj
+    deleteObj,
+    myPost
   };
 };
 

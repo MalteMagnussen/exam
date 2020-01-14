@@ -2,6 +2,7 @@ package rest;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import dto.IngredientDTO;
 import dto.ItemDTO;
 import dto.RecipeDTO;
 import dto.StorageDTO;
@@ -107,6 +108,15 @@ public class RestaurantResource {
     @RolesAllowed({"admin", "user"})
     public List<WeekDTO> getWeek() {
         return FACADE.getWeeks();
+    }
+    
+    @POST
+    @Path("recipe/check")
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+//    @RolesAllowed({"admin", "user"})
+    public String checkStorage(List<IngredientDTO> ingredients) {
+        return "{\"message\":\""+FACADE.checkStorageHelper(ingredients)+"\"}";
     }
     
 

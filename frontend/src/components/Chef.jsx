@@ -15,7 +15,7 @@ const Chef = () => {
   const [recipes, setRecipes] = useState();
   const [itemButton, setItemButton] = useState(false);
   const [menu, setMenu] = useState([]);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [msg, setMsg] = useState("");
 
   // Updates List of items when refresh button is clicked and on load.
   useEffect(() => {
@@ -36,12 +36,28 @@ const Chef = () => {
     if (menu.length >= 7) {
       return;
     }
+
+    facade
+      .myPost("restaurant/recipe/check", item.ingredient_listDTO)
+      .then(res => setMsg(res.message))
+      .catch(err => {
+        if (err.status) {
+          err.fullError.then(e => {
+            console.log(e.code, e.message);
+            setMsg(e.message);
+          });
+        } else {
+          console.log("Network error");
+        }
+      });
+
     setMenu([...menu, item]);
   };
 
   return (
     <>
       <h1>Welcome to the Chefs interface.</h1>
+      <h2>{msg}</h2>
       <Row>
         <Col>
           <h5>Item Table</h5>

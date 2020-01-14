@@ -219,7 +219,7 @@ public class RestaurantFacade {
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
-            Storage storage = em.createNamedQuery("Storage.findStorage", Storage.class).setParameter("id", itemID).getSingleResult();
+            Storage storage = em.find(Storage.class,itemID);
             storage.setAmount(amount);
             em.merge(storage);
             em.getTransaction().commit();
@@ -291,13 +291,13 @@ public class RestaurantFacade {
         }
     }
 
-    public boolean checkStorageHelper(RecipeDTO recipe) {
+    public String checkStorageHelper(List<IngredientDTO> ingredients) {
 
         EntityManager em = getEntityManager();
         try {
             em.getTransaction().begin();
 
-            for (IngredientDTO ingredientDTO : recipe.getIngredient_listDTO()) {
+            for (IngredientDTO ingredientDTO : ingredients) {
                 String name = ingredientDTO.getItemDTO().getName();
                 Integer ingredient_amount = em.createNamedQuery("Ingredient.checkStorage", Integer.class).setParameter("name", name).getSingleResult();
                 Integer storage_amount = em.createNamedQuery("Storage.checkStorage", Integer.class).setParameter("name", name).getSingleResult();
@@ -307,7 +307,7 @@ public class RestaurantFacade {
             }
 
             em.getTransaction().commit();
-            return true;
+            return "You have all the required ingredients for that recipe in storage.";
         } finally {
             em.close();
         }
