@@ -122,7 +122,7 @@ const CreateItem = () => {
             </div>
             <div className="form-group">
               <label className="control-label col-sm-3" htmlFor="age">
-                Age:
+                Price pr Kg:
               </label>
               <div className="col-sm-9">
                 <input
@@ -199,7 +199,8 @@ const StockItem = ({ stockItem }) => {
       <br />
       {stockItem && (
         <>
-          How many of + {stockItem.name} + would you like to Stock?
+          How many of {stockItem.name} would you like to Stock?
+          <br />
           <input
             type="number"
             placeholder="Amount you'd like to update the stock to."
