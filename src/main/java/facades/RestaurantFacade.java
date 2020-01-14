@@ -6,6 +6,7 @@
 package facades;
 
 import dto.ItemDTO;
+import dto.RecipeDTO;
 import dto.StorageDTO;
 import entities.Ingredient;
 import entities.Item;
@@ -118,7 +119,7 @@ public class RestaurantFacade {
             pasta_2.setRecipe(pastaOst);
             ost_3.setRecipe(pastaOst);
 
-            // Persist them. Ingredients will cascade. 
+            // Persist them.  
             em.persist(risLaks);
             em.persist(pastaLaks);
             em.persist(kartoflerLaks);
@@ -224,6 +225,21 @@ public class RestaurantFacade {
             itemDTO = new ItemDTO(item);
             StorageDTO storage = new StorageDTO(itemDTO, amount, itemID);
             return addStorage(storage);
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<RecipeDTO> getRecipes() {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            List<Recipe> recipes = em.createNamedQuery("Recipe.getAll").getResultList();
+            List<RecipeDTO> recipesDTO = new ArrayList();
+            recipes.forEach((recipe) -> {
+                recipesDTO.add(new RecipeDTO(recipe));
+            });
+            return recipesDTO;
         } finally {
             em.close();
         }

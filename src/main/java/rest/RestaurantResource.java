@@ -3,6 +3,7 @@ package rest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import dto.ItemDTO;
+import dto.RecipeDTO;
 import dto.StorageDTO;
 import utils.EMF_Creator;
 import facades.RestaurantFacade;
@@ -80,6 +81,14 @@ public class RestaurantResource {
     public String populateRecipes() {
         FACADE.populateWithRecipes();
         return "{\"Message\":\"Database populated with recipes\"}";
+    }
+    
+    @GET
+    @Path("recipe")
+    @Produces({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin", "user"})
+    public List<RecipeDTO> getAllRecipes() {
+        return FACADE.getRecipes();
     }
 
 //    @GET
