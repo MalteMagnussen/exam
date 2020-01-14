@@ -6,6 +6,7 @@
 package facades;
 
 import entities.Ingredient;
+import entities.Item;
 import entities.Recipe;
 import java.util.List;
 
@@ -86,4 +87,8 @@ public interface RestaurantInterface {
      */
     public Recipe deleteRecipe(int id);
     // CRUD RECIPE END.
+    
+    // CRUD ITEM START
+    public Item addItem(String name, int price_pr_kg);
+    // CRUD ITEM END
 }

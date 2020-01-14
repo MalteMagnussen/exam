@@ -10,6 +10,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
 
 /**
@@ -17,12 +19,16 @@ import javax.persistence.OneToOne;
  * @author Malte
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Storage.getAll", query = "SELECT h FROM Storage h"),
+    @NamedQuery(name = "Storage.deleteAllRows", query = "DELETE FROM Storage")
+})
 public class Storage implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @OneToOne
     private Item item;
