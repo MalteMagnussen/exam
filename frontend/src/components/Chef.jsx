@@ -13,7 +13,6 @@ const Chef = ({ loggedIn }) => {
 };
 
 const ChefPage = () => {
-  // TODO ADD LOGIN CHECK
   const [recipes, setRecipes] = useState();
   const [itemButton, setItemButton] = useState(false);
   const [menu, setMenu] = useState([]);
