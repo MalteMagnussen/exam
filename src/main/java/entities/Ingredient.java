@@ -23,7 +23,10 @@ import javax.persistence.OneToOne;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Ingredient.getAll", query = "SELECT h FROM Ingredient h"),
-    @NamedQuery(name = "Ingredient.deleteAllRows", query = "DELETE FROM Ingredient")
+    @NamedQuery(name = "Ingredient.deleteAllRows", query = "DELETE FROM Ingredient"),
+    @NamedQuery(name = "Ingredient.checkStorage", query = "SELECT h.amount FROM Ingredient h WHERE h.id = (SELECT i.id FROM Item i WHERE i.name = :name)"),
+    @NamedQuery(name = "Ingredient.getForRecipe", query = "SELECT h FROM Ingredient h WHERE h.recipe.id = :id"),
+    @NamedQuery(name = "Ingredient.getItemForRecipe", query = "SELECT i FROM Item i WHERE i.id = (SELECT h.item.id FROM Ingredient h WHERE h.id = :id)")
 })
 public class Ingredient implements Serializable {
 

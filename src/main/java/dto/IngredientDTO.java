@@ -15,16 +15,15 @@ public class IngredientDTO {
 
     private int id;
     private int amount;
-    private RecipeDTO recipeDTO;
     private ItemDTO itemDTO;
 
     public IngredientDTO() {
     }
 
     public IngredientDTO(Ingredient ingredient) {
+        this.itemDTO = new ItemDTO(ingredient.getItem());
         this.id = ingredient.getId();
         this.amount = ingredient.getAmount();
-        this.recipeDTO = new RecipeDTO(ingredient.getRecipe());
     }
 
     public int getId() {
@@ -41,14 +40,6 @@ public class IngredientDTO {
 
     public void setAmount(int amount) {
         this.amount = amount;
-    }
-
-    public RecipeDTO getRecipeDTO() {
-        return recipeDTO;
-    }
-
-    public void setRecipeDTO(RecipeDTO recipeDTO) {
-        this.recipeDTO = recipeDTO;
     }
 
     public ItemDTO getItemDTO() {

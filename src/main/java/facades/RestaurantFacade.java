@@ -5,6 +5,7 @@
  */
 package facades;
 
+import dto.IngredientDTO;
 import dto.ItemDTO;
 import dto.RecipeDTO;
 import dto.StorageDTO;
@@ -19,6 +20,8 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.NoResultException;
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 
 /**
  *
@@ -239,7 +242,16 @@ public class RestaurantFacade {
             List<Recipe> recipes = em.createNamedQuery("Recipe.getAll").getResultList();
             List<RecipeDTO> recipesDTO = new ArrayList();
             recipes.forEach((recipe) -> {
+                List<Ingredient> ingredients = em.createNamedQuery("Ingredient.getForRecipe").setParameter("id", recipe.getId()).getResultList();
+                List<IngredientDTO> ingredientsDTO = new ArrayList();
+                ingredients.forEach((ingredient)->{
+                    Item item = em.createNamedQuery("Ingredient.getItemForRecipe", Item.class).setParameter("id", ingredient.getId()).getSingleResult();
+                    ingredient.setItem(item);
+                    IngredientDTO ingredientDTO = new IngredientDTO(ingredient);
+                    ingredientsDTO.add(ingredientDTO);
+                });
                 RecipeDTO recipeDTO = new RecipeDTO(recipe);
+                recipeDTO.setIngredient_listDTO(ingredientsDTO);
 //                int price = em.createNamedQuery("Recipe.price", Integer.class).setParameter("id", recipe.getId()).getSingleResult();
 //                recipeDTO.setPrice(price);
                 recipesDTO.add(recipeDTO);
@@ -274,6 +286,28 @@ public class RestaurantFacade {
                 weekDTO.add(new WeekDTO(week));
             });
             return weekDTO;
+        } finally {
+            em.close();
+        }
+    }
+
+    public boolean checkStorageHelper(RecipeDTO recipe) {
+
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+
+            for (IngredientDTO ingredientDTO : recipe.getIngredient_listDTO()) {
+                String name = ingredientDTO.getItemDTO().getName();
+                Integer ingredient_amount = em.createNamedQuery("Ingredient.checkStorage", Integer.class).setParameter("name", name).getSingleResult();
+                Integer storage_amount = em.createNamedQuery("Storage.checkStorage", Integer.class).setParameter("name", name).getSingleResult();
+                if (ingredient_amount > storage_amount) {
+                    throw new WebApplicationException("Ingredient with name: "+ name +" is not in storage at a high enough quantity.", Response.Status.BAD_REQUEST);
+                }
+            }
+
+            em.getTransaction().commit();
+            return true;
         } finally {
             em.close();
         }

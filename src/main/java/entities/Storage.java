@@ -23,7 +23,7 @@ import javax.persistence.OneToOne;
 @NamedQueries({
     @NamedQuery(name = "Storage.getAll", query = "SELECT h FROM Storage h"),
     @NamedQuery(name = "Storage.deleteAllRows", query = "DELETE FROM Storage"),
-    @NamedQuery(name = "Storage.findStorage", query = "SELECT h FROM Storage h WHERE h.item = (SELECT y FROM Item y WHERE y.id = :id)")
+    @NamedQuery(name = "Storage.checkStorage", query = "SELECT h.amount FROM Storage h WHERE h.id = (SELECT i.id FROM Item i WHERE i.name = :name)")
 })
 public class Storage implements Serializable {
 

@@ -21,7 +21,7 @@ public class RecipeDTO {
     private String name;
     private List<IngredientDTO> ingredient_listDTO;
     private int price;
-    private List<WeekDTO> week;
+//    private List<WeekDTO> week;
 //    private List<Week_menu_planDTO> week_menu_plan;
 
     public RecipeDTO() {
