@@ -8,6 +8,7 @@ package entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -30,7 +31,7 @@ public class Recipe implements Serializable {
     private int preparation_time; // in seconds
     private String directions; // instructions for the recipe..??
     private String name;
-    @OneToMany(mappedBy = "recipe")
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.PERSIST)
     private List<Ingredient> ingredient_list;
     @ManyToMany(mappedBy = "recipe_list")
     private List<Week_menu_plan> week_menu_plan;
@@ -38,6 +39,18 @@ public class Recipe implements Serializable {
     public Recipe() {
         this.week_menu_plan = new ArrayList();
         this.ingredient_list = new ArrayList();
+    }
+    
+    public Recipe(String directions, String name, int preparation_time) {
+        this.week_menu_plan = new ArrayList();
+        this.ingredient_list = new ArrayList();
+        this.directions = directions;
+        this.name = name; 
+        this.preparation_time = preparation_time;
+    }
+    
+    public void add(Ingredient ingredient) {
+        this.ingredient_list.add(ingredient);
     }
 
     public List<Ingredient> getIngredient_list() {

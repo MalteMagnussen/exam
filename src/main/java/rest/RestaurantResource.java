@@ -73,6 +73,14 @@ public class RestaurantResource {
     public StorageDTO adminAddStorage(@PathParam("id") int id, @PathParam("amount") int amount) {
         return FACADE.updateStorage(amount, id);
     }
+    
+    @GET
+    @Path("populate")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String populateRecipes() {
+        FACADE.populateWithRecipes();
+        return "{\"Message\":\"Database populated with recipes\"}";
+    }
 
 //    @GET
 //    @Path("id/{id}")
