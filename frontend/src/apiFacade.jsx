@@ -43,44 +43,45 @@ const ApiFacade = () => {
     return loggedIn;
   }
 
-  /*
-    FETCH EXAMPLES START
-  */
-  //OBSERVE This returns a promise, NOT the actual data, you must handle asynchronicity by the client
-  function getPersons() {
-    return fetch(URL).then(handleHttpErrors);
-  }
-
-  function addEditPerson(person) {
-    //Complete me. A smart version will handle both Add and Edit, but focus on Add (POST) only first
-
-    if (person.id === "") {
+  function addEditObj(ekstraURL, obj) {
+    if (obj.id === "") {
       // ADD
-      let options = makeOptions("POST", person);
-      fetch(URL, options);
+      const uri = `/api/${ekstraURL}`;
+      let options = makeOptions("POST", true, obj);
+      fetch(uri, options).then(handleHttpErrors);
       console.log("POST");
     } else {
       // EDIT
-      const uri = URL + "/" + person.id;
-      const options = makeOptions("PUT", person);
-      fetch(uri, options);
+      const uri = `/api/${ekstraURL}/${obj.id}`;
+      const options = makeOptions("PUT", true, obj);
+      fetch(uri, options).then(handleHttpErrors);
       console.log("PUT");
     }
   }
 
-  function deletePerson(id) {
-    const uri = URL + "/" + id;
-    const options = makeOptions("DELETE");
-    fetch(uri, options);
+  /**
+   * const uri = `/api/${ekstraURL}/${id}`;
+   * const options = makeOptions("DELETE");
+   * fetch(uri, options).then(handleHttpErrors);
+   * @param {*} ekstraURL
+   * @param {*} id
+   */
+  function deleteObj(ekstraURL, id) {
+    const uri = `/api/${ekstraURL}/${id}`;
+    const options = makeOptions("DELETE", true);
+    fetch(uri, options).then(handleHttpErrors);
     console.log("DELETE");
-    //Complete me
   }
-  /*
-    FETCH EXAMPLES END
-  */
 
   //   //Remember to always include options from the makeOptions fucntion with >true< as the second parameter
   //   //if you want to access a protected endpoint
+
+  /**
+   * const options = makeOptions("GET", true); //True add's the token
+   * return fetch(URL + `/api/${endpoint}/${value}`, options).then(handleHttpErrors);
+   * @param {*} endpoint
+   * @param {*} value
+   */
   const fetchGetData = (endpoint, value) => {
     const options = makeOptions("GET", true); //True add's the token
     return fetch(URL + `/api/${endpoint}/${value}`, options).then(
@@ -116,7 +117,9 @@ const ApiFacade = () => {
   return {
     login,
     logout,
-    fetchGetData
+    fetchGetData,
+    addEditObj,
+    deleteObj
   };
 };
 
