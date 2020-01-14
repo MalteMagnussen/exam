@@ -133,6 +133,11 @@ const AddEditRecipe = ({ newRecipe, emptyRecipe, setMsg }) => {
     event.preventDefault();
   };
 
+  const handleDelete = () => {
+    facade.deleteObj("restaurant/recipe", recipe.id);
+    setRecipe({ ...emptyRecipe });
+  };
+
   useEffect(
     () =>
       setRecipe({
@@ -204,7 +209,7 @@ const AddEditRecipe = ({ newRecipe, emptyRecipe, setMsg }) => {
             <button
               type="submit"
               onClick={handleSubmit}
-              className="btn btn-primary"
+              className="btn btn-success"
             >
               {buttonName}
             </button>
@@ -217,6 +222,14 @@ const AddEditRecipe = ({ newRecipe, emptyRecipe, setMsg }) => {
               }}
             >
               Cancel
+            </button>
+            <button
+              style={{ marginLeft: 5 }}
+              type="button"
+              className="btn btn-danger"
+              onClick={handleDelete}
+            >
+              Delete
             </button>
           </div>
         </div>
