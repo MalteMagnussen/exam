@@ -14,7 +14,15 @@ const Chef = ({ loggedIn }) => {
 
 const ChefPage = () => {
   const [recipes, setRecipes] = useState();
-  const [menu, setMenu] = useState([]);
+
+  const initialMenu = {
+    recipe_list: [],
+    year_: 0,
+    week_num: 0,
+    id: 0
+  };
+
+  const [menu, setMenu] = useState(initialMenu);
   const [msg, setMsg] = useState("");
   const [filter, setFilter] = useState("");
 
@@ -54,7 +62,7 @@ const ChefPage = () => {
   };
 
   const handleMenu = item => {
-    if (menu.length >= 7) {
+    if (menu.recipe_list.length >= 7) {
       return;
     }
 
@@ -72,7 +80,9 @@ const ChefPage = () => {
         }
       });
 
-    setMenu([...menu, item]);
+    let list = [...menu.recipe_list];
+    list.push(item);
+    setMenu({ ...menu, recipe_list: list });
   };
 
   return (
@@ -142,7 +152,12 @@ const ChefPage = () => {
         </Col>
         <Col>
           <br />
-          <Menu menu={menu} setMenu={setMenu} />
+          <Menu
+            menu={menu}
+            setMenu={setMenu}
+            initialMenu={initialMenu}
+            setMsg={setMsg}
+          />
         </Col>
       </Row>
 
@@ -163,7 +178,10 @@ const CalculateTotalPrice = ({ item }) => {
   return <>{price}.-</>;
 };
 
-const Menu = ({ menu, setMenu }) => {
+const Menu = ({ menu, setMenu, initialMenu, setMsg }) => {
+  const [year_, setYear_] = useState(0);
+  const [week_num, setWeek_num] = useState(0);
+
   const week = [
     "Monday",
     "Tuesday",
@@ -173,6 +191,16 @@ const Menu = ({ menu, setMenu }) => {
     "Saturday",
     "Sunday"
   ];
+
+  const handleSubmit = () => {
+    setMenu({ ...menu, week_num: Number(week_num), year: Number(year_) });
+
+    facade.addEditObj("restaurant/week/add", menu);
+
+    setMenu({ ...initialMenu });
+
+    setMsg("Menu submitted. See it on the frontpage.");
+  };
 
   return (
     <>
@@ -185,6 +213,27 @@ const Menu = ({ menu, setMenu }) => {
       >
         Empty Menu List.
       </button>
+      <br />
+      Set Week Number:{" "}
+      <input
+        type="number"
+        value={week_num}
+        onChange={e => setWeek_num(e.target.value)}
+        placeholder="Week Number"
+      ></input>
+      <br />
+      Set Year:{" "}
+      <input
+        type="number"
+        value={year_}
+        onChange={e => setYear_(e.target.value)}
+        placeholder="Week Number"
+      ></input>
+      <br />
+      <button type="button" onClick={handleSubmit}>
+        Submit Week Menu
+      </button>
+      <br />
       <h5>Menu Table</h5>
       {menu && (
         <Table>
@@ -197,7 +246,7 @@ const Menu = ({ menu, setMenu }) => {
             </tr>
           </thead>
           <tbody>
-            {menu.map((item, index) => (
+            {menu.recipe_list.map((item, index) => (
               <tr key={item.id}>
                 <td>{week[index]}</td>
                 <td>{item.name}</td>
@@ -208,7 +257,6 @@ const Menu = ({ menu, setMenu }) => {
           </tbody>
         </Table>
       )}
-
       <br />
       {JSON.stringify(menu)}
     </>

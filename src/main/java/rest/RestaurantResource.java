@@ -105,7 +105,6 @@ public class RestaurantResource {
     @GET
     @Path("week")
     @Produces({MediaType.APPLICATION_JSON})
-    @RolesAllowed({"admin", "user"})
     public List<WeekDTO> getWeek() {
         return FACADE.getWeeks();
     }

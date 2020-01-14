@@ -279,6 +279,13 @@ public class RestaurantFacade {
             // TODO in frontend - Send the week plan to backend. 
             // Very tired now. 
             
+            List<Recipe> recipes = new ArrayList();
+            for (Recipe recipe: week.getRecipe_list()) {
+                Recipe recipe_ = em.find(Recipe.class, recipe.getId());
+                recipes.add(recipe_);
+            }
+            week.setRecipe_list(recipes);
+            
             em.persist(week);
             em.getTransaction().commit();
             return new WeekDTO(week);
