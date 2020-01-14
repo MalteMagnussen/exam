@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import facade from "../apiFacade.jsx";
 import { Dropdown, Button } from "react-bootstrap";
 
@@ -124,6 +124,39 @@ const CreateItem = () => {
         </div>
       </form>
       <p>{JSON.stringify(item)}</p>
+      <br />
+      <ItemList />
+    </>
+  );
+};
+
+const ItemList = () => {
+  const [itemButton, setItemButton] = useState(false);
+  const [itemList, setItemList] = useState();
+  // Updates List of items when refresh button is clicked.
+  useEffect(() => {
+    facade
+      .fetchGetData("restaurant/items", true)
+      .then(res => setItemList(res))
+      .catch(err => {
+        if (err.status) {
+          err.fullError.then(e => console.log(e.code, e.message));
+        } else {
+          console.log("Network error");
+        }
+      });
+  }, [itemButton]);
+
+  return (
+    <>
+      <button
+        className="btn btn-primary"
+        type="button"
+        onClick={setItemButton(!itemButton)}
+      >
+        Refresh Item List.
+      </button>
+      <p>{JSON.stringify(itemList)}</p>
     </>
   );
 };

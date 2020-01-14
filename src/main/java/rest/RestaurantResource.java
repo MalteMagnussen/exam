@@ -59,6 +59,14 @@ public class RestaurantResource {
         System.out.println("Storade added: " + storage);
         return FACADE.addStorage(storage);
     }
+    
+    @GET
+    @Path("items")
+    @Produces({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin", "user"})
+    public List<ItemDTO> getItems() {
+        return FACADE.getItems();
+    }
 
 //    @GET
 //    @Path("id/{id}")

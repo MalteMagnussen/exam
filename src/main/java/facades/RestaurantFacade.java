@@ -11,6 +11,7 @@ import entities.Ingredient;
 import entities.Item;
 import entities.Recipe;
 import entities.Storage;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -44,30 +45,6 @@ public class RestaurantFacade {
         return emf.createEntityManager();
     }
 
-    public List<Recipe> getAllRecipes() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public List<Recipe> getSevenRecipes(List<String> names) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public boolean checkStorage(Recipe recipe) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public Recipe addRecipe(String name, String directions, int preparation_time, List<Ingredient> ingredient_list) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    public Recipe editRecipe(int id, String name, String directions, int preparation_time, List<Ingredient> ingredient_list) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-    
-    public Recipe deleteRecipe(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
     public ItemDTO addItem(ItemDTO itemDTO) {
         // Make item
         Item item = new Item(itemDTO);
@@ -82,7 +59,7 @@ public class RestaurantFacade {
             em.close();
         }
     }
-    
+
     public StorageDTO addStorage(StorageDTO storageDTO) {
         Storage storage = new Storage(storageDTO);
         EntityManager em = getEntityManager();
@@ -91,6 +68,22 @@ public class RestaurantFacade {
             em.persist(storage);
             em.getTransaction().commit();
             return new StorageDTO(storage);
+        } finally {
+            em.close();
+        }
+    }
+
+    public List<ItemDTO> getItems() {
+        EntityManager em = getEntityManager();
+        try {
+            em.getTransaction().begin();
+            List<Item> items = em.createNamedQuery("Item.getAll").getResultList();
+            em.getTransaction().commit();
+            List<ItemDTO> itemsDTO = new ArrayList();
+            items.forEach((item) -> {
+                itemsDTO.add(new ItemDTO(item));
+            });
+            return itemsDTO;
         } finally {
             em.close();
         }

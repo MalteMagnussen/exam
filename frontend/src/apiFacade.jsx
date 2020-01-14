@@ -77,6 +77,7 @@ const ApiFacade = () => {
   //   //if you want to access a protected endpoint
 
   /**
+   * const fetchGetData = (endpoint, value) => {
    * const options = makeOptions("GET", true); //True add's the token
    * return fetch(URL + `/api/${endpoint}/${value}`, options).then(handleHttpErrors);
    * @param {*} endpoint
