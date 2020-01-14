@@ -17,6 +17,7 @@ import {
 } from "react-router-dom";
 import ShowRoles from "./components/ShowRoles.jsx";
 import Jokes from "./components/getJokes.jsx";
+import Recipes from "./components/Recipes.jsx";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -46,6 +47,9 @@ const App = () => {
             />
             <Route path="/admin">
               <Admin loggedIn={loggedIn} roles={roles} />
+            </Route>
+            <Route path="/adminrecipes">
+              <Recipes loggedIn={loggedIn} roles={roles} />
             </Route>
             <Route path="/Jokes">
               <Jokes loggedIn={loggedIn} />
@@ -106,7 +110,12 @@ const Header = ({ loggedIn, setLoggedIn, roles, setRoles }) => {
       )}
       {loggedIn && roles.includes("admin") && (
         <li>
-          <NavLink to="/admin">Admin panel</NavLink>
+          <NavLink to="/admin">Admin - Items</NavLink>
+        </li>
+      )}
+      {loggedIn && roles.includes("admin") && (
+        <li>
+          <NavLink to="/adminrecipes">Admin - Recipes</NavLink>
         </li>
       )}
     </ul>

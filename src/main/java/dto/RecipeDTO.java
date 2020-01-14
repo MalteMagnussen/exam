@@ -20,7 +20,7 @@ public class RecipeDTO {
     private String directions; // instructions for the recipe..??
     private String name;
     private List<IngredientDTO> ingredient_listDTO;
-    private int price;
+//    private int price;
 //    private List<WeekDTO> week;
 //    private List<Week_menu_planDTO> week_menu_plan;
 
@@ -40,13 +40,13 @@ public class RecipeDTO {
 //        });
     }
 
-    public int getPrice() {
-        return price;
-    }
-
-    public void setPrice(int price) {
-        this.price = price;
-    }
+//    public int getPrice() {
+//        return price;
+//    }
+//
+//    public void setPrice(int price) {
+//        this.price = price;
+//    }
 
     public int getId() {
         return id;

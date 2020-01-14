@@ -114,7 +114,7 @@ public class RestaurantResource {
     @Path("recipe/check")
     @Consumes({MediaType.APPLICATION_JSON})
     @Produces({MediaType.APPLICATION_JSON})
-//    @RolesAllowed({"admin", "user"})
+    @RolesAllowed({"admin", "user"})
     public String checkStorage(List<IngredientDTO> ingredients) {
         return "{\"message\":\""+FACADE.checkStorageHelper(ingredients)+"\"}";
     }
