@@ -147,19 +147,21 @@ public class RestaurantResource {
         return FACADE.deleteRecipe(id);
     }
 
-//    @POST
-//    @Path("ingredient/{itemId}/{amount}/{recipeId}") //ID OF ITEM
-//    @Consumes({MediaType.APPLICATION_JSON})
-//    @Produces({MediaType.APPLICATION_JSON})
-//    @RolesAllowed({"admin"})
-//    public IngredientDTO makeIngredient(@PathParam("itemId") int itemId,@PathParam("amount") int amount,@PathParam("recipeId") int recipeId  ) {
-//        // id of the item.
-//        // find item. 
-//        // make ingredient with volume. new ingredient ( volume, item ) 
-//        // find recipe with id
-//        // set recipe on ingredient
-//        // then persist ingredient
-//    }
+    @POST
+    @Path("ingredient/{itemId}/{amount}/{recipeId}") //ID OF ITEM
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Produces({MediaType.APPLICATION_JSON})
+    @RolesAllowed({"admin"})
+    public IngredientDTO makeIngredient(@PathParam("itemId") int itemId,@PathParam("amount") int amount,@PathParam("recipeId") int recipeId  ) {
+        // id of the item.
+        // find item. 
+        // make ingredient with volume. new ingredient ( volume, item ) 
+        // find recipe with id
+        // set recipe on ingredient
+        // then persist ingredient
+        
+        return FACADE.addIngredient(itemId, amount, recipeId);
+    }
     
     
     

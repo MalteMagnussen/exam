@@ -18,6 +18,7 @@ import {
 import ShowRoles from "./components/ShowRoles.jsx";
 import Jokes from "./components/getJokes.jsx";
 import Recipes from "./components/Recipes.jsx";
+import IngredientsPage from "./components/Ingredients.jsx";
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -56,6 +57,9 @@ const App = () => {
             </Route>
             <Route path="/chef">
               <Chef loggedIn={loggedIn} />
+            </Route>
+            <Route path="/ingredients">
+              <IngredientsPage loggedIn={loggedIn} roles={roles} />
             </Route>
             <Route component={NoMatch} />
           </Switch>
@@ -116,6 +120,11 @@ const Header = ({ loggedIn, setLoggedIn, roles, setRoles }) => {
       {loggedIn && roles.includes("admin") && (
         <li>
           <NavLink to="/adminrecipes">Admin - Recipes</NavLink>
+        </li>
+      )}
+      {loggedIn && roles.includes("admin") && (
+        <li>
+          <NavLink to="/ingredients">Admin - Ingredients</NavLink>
         </li>
       )}
     </ul>

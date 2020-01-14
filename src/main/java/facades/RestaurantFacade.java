@@ -355,4 +355,27 @@ public class RestaurantFacade {
         }
     }
 
+    public IngredientDTO addIngredient(int itemId, int amount, int recipeId) {
+       // id of the item.
+        // find item. 
+        // make ingredient with volume. new ingredient ( volume, item ) 
+        // find recipe with id
+        // set recipe on ingredient
+        // then persist ingredient
+        // Getting tired
+        EntityManager em = getEntityManager();
+        try { 
+            em.getTransaction().begin();
+            Item item = em.find(Item.class, itemId);
+            Ingredient ingredient = new Ingredient(amount, item);
+            Recipe recipe = em.find(Recipe.class, recipeId);
+            ingredient.setRecipe(recipe);
+            em.persist(ingredient);
+            em.getTransaction().commit();
+            return new IngredientDTO(ingredient);
+        } finally {
+            em.close();
+        }
+    }
+
 }

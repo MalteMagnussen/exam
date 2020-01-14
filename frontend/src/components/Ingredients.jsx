@@ -2,8 +2,21 @@ import React, { useState, useEffect } from "react";
 import facade from "../apiFacade.jsx";
 import { Table, Row, Col, DropdownButton, Dropdown } from "react-bootstrap";
 
-const IngredientsPage = () => {
+const IngredientsPage = ({ loggedIn, roles }) => {
+  return (
+    <>
+      {!loggedIn || !roles.includes("admin") ? (
+        <p>You are not logged in as admin</p>
+      ) : (
+        <Ingredients />
+      )}
+    </>
+  );
+};
+
+const Ingredients = () => {
   const [recipes, setRecipes] = useState();
+  const [items, setItems] = useState();
   const [itemButton, setItemButton] = useState(false);
   const [msg, setMsg] = useState("");
   const emptyRecipe = {
@@ -14,13 +27,39 @@ const IngredientsPage = () => {
     preparation_time: 0
   };
   const [recipe, setRecipe] = useState({ ...emptyRecipe });
+  const [item, setItem] = useState();
+  const [amount, setAmount] = useState();
 
-  // Updates List of items when refresh button is clicked and on load.
+  const submitIngredient = () => {
+    // ingredient/{itemId}/{amount}/{recipeId}
+    // POST
+    facade.myPost(
+      "restaurant/ingredient/" +
+        item.id +
+        "/" +
+        Number(amount) +
+        "/" +
+        recipe.id
+    );
+  };
+
+  // Updates Lists of items when refresh button is clicked and on load.
   useEffect(() => {
-    // UPDATE ITEMLIST
+    // UPDATE ITEMLISTS
     facade
       .fetchGetData("restaurant/recipe")
       .then(res => setRecipes(res))
+      .catch(err => {
+        if (err.status) {
+          err.fullError.then(e => console.log(e.code, e.message));
+        } else {
+          console.log("Network error");
+        }
+      });
+
+    facade
+      .fetchGetData("restaurant/items")
+      .then(res => setItems(res))
       .catch(err => {
         if (err.status) {
           err.fullError.then(e => console.log(e.code, e.message));
@@ -33,39 +72,45 @@ const IngredientsPage = () => {
   return (
     <>
       <br />
-      <h5>Item Table</h5>
-      {recipes && (
-        <Table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Directions</th>
-              <th>Prep Time in seconds</th>
-              <th>Edit</th>
-            </tr>
-          </thead>
-          <tbody>
-            {recipes.map(item => (
-              <tr key={item.id}>
-                <td>{item.id}</td>
-                <td>{item.name}</td>
-                <td>{item.directions}</td>
-                <td>{item.preparation_time}</td>
-                <td>
-                  <button
-                    type="button"
-                    className="btn btn-primary"
-                    onClick={() => setRecipe(item)}
-                  >
-                    EDIT
-                  </button>
-                </td>
-              </tr>
+      <h5>Make ingredient.</h5>
+      {recipes && items && (
+        <>
+          <DropdownButton id="recipes" title="Choose Recipe">
+            {recipes.map(recipe => (
+              <Dropdown.Item onClick={() => setRecipe(recipe)}>
+                {recipe.name}
+              </Dropdown.Item>
             ))}
-          </tbody>
-        </Table>
+          </DropdownButton>{" "}
+          Recipe name: {recipe && recipe.name}
+          <br />
+          <DropdownButton id="items" title="Choose Items">
+            {items.map(item => (
+              <Dropdown.Item onClick={() => setItem(item)}>
+                {item.name}
+              </Dropdown.Item>
+            ))}
+          </DropdownButton>{" "}
+          Item name: {item && item.name}
+          <br />
+          <input
+            type="number"
+            placeholder="Input amount"
+            value={amount}
+            onChange={e => setAmount(e.target.value)}
+          ></input>
+        </>
       )}
+      <br />
+      <br />
+      <button
+        type="button"
+        className="btn btn-success"
+        onClick={submitIngredient}
+      >
+        Submit Ingredient
+      </button>
+      <br />
       <br />
       <button
         type="button"
@@ -76,6 +121,13 @@ const IngredientsPage = () => {
       </button>
       <br />
       {JSON.stringify(recipe)}
+      <br />
+      {JSON.stringify(item)}
+      <br />
+      {JSON.stringify(amount)}
+      <br />
     </>
   );
 };
+
+export default IngredientsPage;
