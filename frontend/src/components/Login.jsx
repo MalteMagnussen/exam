@@ -35,11 +35,9 @@ export const LogIn = ({ login, message }) => {
 };
 
 export const LoggedIn = () => {
-
   return (
     <>
       <h2>You are now logged in</h2>
-      <Link to="/search">Searching tool</Link>
       <br></br>
       <br></br>
     </>

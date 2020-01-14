@@ -44,15 +44,15 @@ const ApiFacade = () => {
   }
 
   function addEditObj(ekstraURL, obj) {
-    if (obj.id === "") {
+    if (obj.id == 0) {
       // ADD
-      const uri = `/api/${ekstraURL}`;
+      const uri = URL + `/api/${ekstraURL}`;
       let options = makeOptions("POST", true, obj);
       fetch(uri, options).then(handleHttpErrors);
       console.log("POST");
     } else {
       // EDIT
-      const uri = `/api/${ekstraURL}/${obj.id}`;
+      const uri = URL + `/api/${ekstraURL}/${obj.id}`;
       const options = makeOptions("PUT", true, obj);
       fetch(uri, options).then(handleHttpErrors);
       console.log("PUT");
@@ -67,7 +67,7 @@ const ApiFacade = () => {
    * @param {*} id
    */
   function deleteObj(ekstraURL, id) {
-    const uri = `/api/${ekstraURL}/${id}`;
+    const uri = URL + `/api/${ekstraURL}/${id}`;
     const options = makeOptions("DELETE", true);
     fetch(uri, options).then(handleHttpErrors);
     console.log("DELETE");

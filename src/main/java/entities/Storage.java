@@ -13,7 +13,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
@@ -24,7 +23,6 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Storage.getAll", query = "SELECT h FROM Storage h"),
     @NamedQuery(name = "Storage.deleteAllRows", query = "DELETE FROM Storage")
 })
-@XmlRootElement
 public class Storage implements Serializable {
 
     private static final long serialVersionUID = 1L;

@@ -11,14 +11,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  *
  * @author Malte
  */
 @Entity
-@XmlRootElement
 public class Item implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,7 +33,7 @@ public class Item implements Serializable {
     public Item(ItemDTO itemDTO) {
         this.id = itemDTO.getId();
         this.name = itemDTO.getName();
-        this.price_pr_kg = itemDTO.getKg_price();
+        this.price_pr_kg = Integer.parseInt(itemDTO.getPrice_pr_kg());
     }
 
     /**

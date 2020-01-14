@@ -6,6 +6,7 @@
 package dto;
 
 import entities.Item;
+import java.util.Objects;
 
 /**
  *
@@ -15,7 +16,7 @@ public class ItemDTO {
 
     private int id;
     private String name;
-    private int kg_price; // Price in 1/100 dkk. ( Pris i ører )
+    private String price_pr_kg; // Price in 1/100 dkk. ( Pris i ører )
 
     public ItemDTO() {
     }
@@ -23,7 +24,7 @@ public class ItemDTO {
     public ItemDTO(Item item) {
         this.id = item.getId();
         this.name = item.getName();
-        this.kg_price = item.getPrice_pr_kg();
+        this.price_pr_kg = String.valueOf(item.getPrice_pr_kg());
     }
 
     public int getId() {
@@ -42,12 +43,48 @@ public class ItemDTO {
         this.name = name;
     }
 
-    public int getKg_price() {
-        return kg_price;
+    public String getPrice_pr_kg() {
+        return price_pr_kg;
     }
 
-    public void setKg_price(int kg_price) {
-        this.kg_price = kg_price;
+    public void setPrice_pr_kg(String price_pr_kg) {
+        this.price_pr_kg = price_pr_kg;
     }
+
+    @Override
+    public String toString() {
+        return "ItemDTO{" + "name=" + name + ", price_pr_kg=" + price_pr_kg + '}';
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 43 * hash + Objects.hashCode(this.name);
+        hash = 43 * hash + Objects.hashCode(this.price_pr_kg);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final ItemDTO other = (ItemDTO) obj;
+        if (!Objects.equals(this.name, other.name)) {
+            return false;
+        }
+        if (!Objects.equals(this.price_pr_kg, other.price_pr_kg)) {
+            return false;
+        }
+        return true;
+    }
+    
+    
 
 }

@@ -45,6 +45,7 @@ public class RestaurantResource {
     @Produces({MediaType.APPLICATION_JSON})
     @RolesAllowed({"admin"})
     public ItemDTO adminAddHobby(ItemDTO item) {
+        System.out.println("item/add: "+ item);
         return FACADE.addItem(item);
     }
 

@@ -2,24 +2,7 @@ import React, { useState } from "react";
 import facade from "../apiFacade.jsx";
 import { Dropdown, Button } from "react-bootstrap";
 
-const errorMessage = "Fill out all fields before submitting.";
-
-const acceptable_categories = [
-  "career",
-  "celebrity",
-  "dev",
-  "explicit",
-  "fashion",
-  "food",
-  "history",
-  "money",
-  "movie",
-  "music",
-  "political",
-  "science",
-  "sport",
-  "travel"
-];
+const defaultErrorMessage = "Fill out all fields before submitting.";
 
 const AdminPanel = ({ loggedIn, roles }) => {
   return (
@@ -42,14 +25,15 @@ const AdminPage = () => {
 };
 
 const CreateItem = () => {
-  const emptyItem = { id: "", name: "", price_pr_kg: "" };
+  const emptyItem = { id: 0, name: "", price_pr_kg: 0 };
   const [item, setItem] = useState({ ...emptyItem });
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleChange = event => {
-    if (item.name === "" || item.price_pr_kg === "") {
-      setErrorMessage(errorMessage);
-      return;
+    if (item.name === "" || item.price_pr_kg == 0) {
+      setErrorMessage(defaultErrorMessage);
+    } else {
+      setErrorMessage("");
     }
     const target = event.target;
     const id = target.id;
@@ -59,18 +43,18 @@ const CreateItem = () => {
 
   const handleSubmit = event => {
     event.preventDefault();
-    if (item.name === "" || item.price_pr_kg === "") {
-      setErrorMessage(errorMessage);
+    if (item.name === "" || item.price_pr_kg == 0) {
+      setErrorMessage(defaultErrorMessage);
       return;
     }
     console.log("About to submit item");
-    facade.addEditObj(item);
+    facade.addEditObj("restaurant/item/add", item);
     // Empty out the fields and set new item.
     setItem({ ...emptyItem });
     setErrorMessage("");
   };
 
-  const buttonName = item.id === "" ? "Save" : "Edit";
+  const buttonName = item.id === 0 ? "Save" : "Edit";
 
   return (
     <>
@@ -81,7 +65,12 @@ const CreateItem = () => {
         <div className="form-group">
           <label className="control-label col-sm-3">Id:</label>
           <div className="col-sm-9">
-            <input className="form-control" readOnly id="id" value={item.id} />
+            <input
+              className="form-control"
+              readOnly={true}
+              id="id"
+              value={item.id}
+            />
           </div>
         </div>
         <div className="form-group">
