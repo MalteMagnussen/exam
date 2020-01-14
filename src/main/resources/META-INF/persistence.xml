@@ -5,6 +5,11 @@
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>entities.Role</class>
     <class>entities.User</class>
+    <class>entities.Storage</class>
+    <class>entities.Recipe</class>
+    <class>entities.Ingredient</class>
+    <class>entities.Week_menu_plan</class>
+    <class>entities.Item</class>
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <!-- DO NOT remove the line below. It's not set by the  entityUtils.EMF_Creator -->
