@@ -27,3 +27,10 @@ password: user
 
 
 How far I got:
+Klokken er nu 03:00 om natten. Jeg har arbejdet siden kl 08.30
+Jeg er blevet færdig med alt udover følgende:
+	- Ordentlig ExceptionHandling.
+	- Denne optional: Optionally show a details page using routing and possibly include an image of the recipe
+	- At Kunne oprette Menu'er. 
+	- Grunding Testing (har lavet en smule testing dog)
+	- JavaDoc
