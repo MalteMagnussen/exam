@@ -299,6 +299,10 @@ public class RestaurantFacade {
         try {
             em.getTransaction().begin();
             List<Week_menu_plan> weeks = em.createNamedQuery("Week_menu_plan.getAll").getResultList();
+            for (Week_menu_plan week: weeks) {
+               List<Recipe> recipes = em.createNamedQuery("Week_menu_plan.getRecipes").setParameter("id", week.getId()).getResultList();
+               week.setRecipe_list(recipes);
+            }
             em.getTransaction().commit();
             List<WeekDTO> weekDTO = new ArrayList();
             weeks.forEach(week -> {

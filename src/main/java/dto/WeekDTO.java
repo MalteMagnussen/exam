@@ -69,10 +69,9 @@ public class WeekDTO {
 
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 43 * hash + Objects.hashCode(this.recipe_list);
-        hash = 43 * hash + this.week_num;
-        hash = 43 * hash + this.year_;
+        int hash = 7;
+        hash = 83 * hash + this.week_num;
+        hash = 83 * hash + this.year_;
         return hash;
     }
 
@@ -92,9 +91,6 @@ public class WeekDTO {
             return false;
         }
         if (this.year_ != other.year_) {
-            return false;
-        }
-        if (!Objects.equals(this.recipe_list, other.recipe_list)) {
             return false;
         }
         return true;

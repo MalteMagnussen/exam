@@ -25,7 +25,8 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Week_menu_plan.getAll", query = "SELECT h FROM Week_menu_plan h"),
-    @NamedQuery(name = "Week_menu_plan.deleteAllRows", query = "DELETE FROM Week_menu_plan")
+    @NamedQuery(name = "Week_menu_plan.deleteAllRows", query = "DELETE FROM Week_menu_plan"),
+    @NamedQuery(name= "Week_menu_plan.getRecipes", query = "SELECT r.id FROM Week_menu_plan m JOIN m.recipe_list r WHERE m.id = :id")
 })
 public class Week_menu_plan implements Serializable {
 
