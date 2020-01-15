@@ -209,7 +209,7 @@ const Menu = ({ menu, setMenu, initialMenu, setMsg }) => {
       <button
         type="button"
         className="btn btn-danger"
-        onClick={() => setMenu([])}
+        onClick={() => setMenu({ ...initialMenu })}
       >
         Empty Menu List.
       </button>
